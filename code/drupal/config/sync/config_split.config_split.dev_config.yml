@@ -1,0 +1,17 @@
+uuid: 9a0662d0-93a5-4d20-bfc0-ce11a4d2ea24
+langcode: en
+status: true
+dependencies: {  }
+id: dev_config
+label: 'Development Configuration'
+folder: ../config/dev_config
+module:
+  devel: 0
+theme: {  }
+blacklist:
+  - system.performance
+  - 'devel.*'
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

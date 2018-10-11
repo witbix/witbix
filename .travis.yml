@@ -1,0 +1,22 @@
+language: bash
+services:
+- docker
+env:
+  global:
+  - DEPLOY_USER=travis
+  - SERVER_IP=142.93.223.4
+  - PRO_DOMAIN=witbix.com
+  - DEV_DOMAIN=dev.witbix.com
+  - secure: "mDvwRLguCSRN48SMfOHavBLhqN/HrobWFm9q1ir5vOJHBR+LWhFQ3Xyo7HTesnfdZyV/BYu2rNGpNoaIu2GUN/S9SJfxU+gnBYiLm0nHG9cRKbOh+M98mxzItyWayPCkC2YjGE2n52BKkV1oTI+Y422yz9Y18oQl2eVoSo6tJQSzjZM+YugALuYEuwwjgjgSIFk0wH0nw6I1GKvUycarO4vXv4vbrc8QNwM6ic91v5Ct1/9VUbt3GgDeraiYOFxbhWV/ykLxwX9GK/73WhdnmNI+qI8XpXO7znNSdJv8wxo5pfPcA6t4wlzaC8iGSyT4jgHrZg3QusaDQ8ZO2NIRV7Ib69pl/8TsA1s1iz3p6EP6DhP3kz3ALOIFI2e8LxzoY11KimZv7HA0jpU6ByF9p3omYRgxV0vwKDPyQpF9HhLttJs+9XPAyiOY9llq3rkrg7mxOiKlm2UA6R5Zly8Sr7bYiq5TEgc4uDjszweAU5vo2z3jGJfRA0cj28ehkEfiRcy+qa+YIce5p4XnIhPLs6ncO7PNuujspjI8W1B9UXU/n2xXQ+ioPo50ysO2DcNxIf3RZjYfDZLtVE24rgaWCn1eTvAnIwpo3QhoNmfQGIuWr0DyLl9cCNk+9ZeJ3+TJ6fAUwZ+bY3MyzjPdlW5WKx9GrWOKZAxSDKl3wt/LIUY="
+before_install:
+- openssl aes-256-cbc -K $encrypted_7226a3f085d7_key -iv $encrypted_7226a3f085d7_iv
+  -in ./travis/travis_rsa.enc -out travis_rsa -d
+before_script:
+- "./travis/docker-build.sh"
+script:
+- "./travis/drupal-build.sh"
+after_success:
+- chmod 600 travis_rsa
+- eval $(ssh-agent)
+- ssh-add travis_rsa
+- "./travis/deploy.sh"

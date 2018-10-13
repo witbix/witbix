@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set +x
 
 docker network create -d bridge traefik-network
 docker run -d --network=traefik-network -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock --name=traefik traefik:latest --api --docker
@@ -13,3 +14,4 @@ else
    echo $red Drupal build failed $white
 fi
 
+set -x

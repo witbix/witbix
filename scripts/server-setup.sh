@@ -5,16 +5,10 @@ read -p 'Server Address ' SERVER
 read -p 'Deploy User Name ' USER
 
 # Generate ssh key pair
-ssh-keygen -t rsa -N "" -f ${USER}_rsa
+ssh-keygen -t rsa -N "" -f secrets/${USER}_rsa
 PUB_KEY=$(cat ${USER}_rsa.pub)
 PRV_KEY=$(cat ${USER}_rsa)
 
-# Encrypt private key with your CI tool
-travis encrypt-file ${USER}_rsa ./travis/${USER}_rsa.enc --add --force
-
-# Add rsa keys to gitignore
-echo ${USER}_rsa >> .gitignore
-echo ${USER}_rsa.pub >> .gitignore
 
 ssh -t -o StrictHostKeyChecking=no root@"${SERVER}" << EOF
 sudo adduser --disabled-password --gecos "" ${USER}

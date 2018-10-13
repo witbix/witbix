@@ -10,11 +10,6 @@ echo "##########################################################################
         docker network create -d bridge traefik-network
     fi
 
-    if [ \$(docker ps | grep -c traefik) == 0 ]; then
-        echo "Creating traefik container"
-        docker run -d --network=traefik-network -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock --name=traefik traefik:latest --api --docker
-    fi
-
     EXISTING_MASTER_PROJECT=\$(ls | grep 'master' | grep -v 'backup')
     EXISTING_DEV_PROJECT=\$(ls | grep 'dev')
 
@@ -83,6 +78,11 @@ echo "##########################################################################
             PROJECT_NAME=backup-\${EXISTING_MASTER_PROJECT} DOMAIN_NAME=${PRO_DOMAIN} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} GITHUB_TOKEN=${GITHUB_TOKEN} docker-compose -p \${ACTIVE_MASTER_PROJECT_NAME} up --no-start
             rm .env
         fi
+    fi
+
+    if [ \$(docker ps | grep -c traefik) == 0 ]; then
+        echo "Creating traefik container"
+        docker run -d --network=traefik-network -p 80:80 -p 443:443 -v /var/run/docker.sock:/var/run/docker.sock -v \$PWD/docker/traefik:/etc/traefik -v \$PWD/secrets/ssl:/etc/ssl --name=traefik traefik:latest --api --docker
     fi
 
 echo "#################################################################################################################"

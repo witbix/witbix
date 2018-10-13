@@ -4,8 +4,7 @@
 
 # Ignore sensitive files
 .env
-travis_rsa
-travis_rsa.pub
+
 
 # exception to the rule
-!code/drupal/web/sites/*/files/awe-menu-css/
+!/code/drupal/web/sites/*/files/awe-menu-css

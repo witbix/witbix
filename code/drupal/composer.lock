@@ -5725,12 +5725,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:witbix/awe_builder.git",
-                "reference": "958638b71ecf968d83c505f95d3b324078e90fd6"
+                "reference": "6aa2b5aa8ecfebb3acf1a24278ec964d1850eca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/witbix/awe_builder/zipball/958638b71ecf968d83c505f95d3b324078e90fd6",
-                "reference": "958638b71ecf968d83c505f95d3b324078e90fd6",
+                "url": "https://api.github.com/repos/witbix/awe_builder/zipball/6aa2b5aa8ecfebb3acf1a24278ec964d1850eca8",
+                "reference": "6aa2b5aa8ecfebb3acf1a24278ec964d1850eca8",
                 "shasum": ""
             },
             "type": "drupal-module",
@@ -5739,7 +5739,7 @@
                 "source": "https://github.com/witbix/awe_builder/tree/bnc-theme",
                 "issues": "https://github.com/witbix/awe_builder/issues"
             },
-            "time": "2018-10-13T23:02:36+00:00"
+            "time": "2018-10-15T06:19:06+00:00"
         },
         {
             "name": "witbix/bnc_theme",
@@ -5773,12 +5773,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:witbix/md_megamenu.git",
-                "reference": "7f38134ea2251ee360c8c23a6a29526e328bcbc7"
+                "reference": "d84bfc8f3afb563b54056c8a1c545a587fde78af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/witbix/md_megamenu/zipball/7f38134ea2251ee360c8c23a6a29526e328bcbc7",
-                "reference": "7f38134ea2251ee360c8c23a6a29526e328bcbc7",
+                "url": "https://api.github.com/repos/witbix/md_megamenu/zipball/d84bfc8f3afb563b54056c8a1c545a587fde78af",
+                "reference": "d84bfc8f3afb563b54056c8a1c545a587fde78af",
                 "shasum": ""
             },
             "require": {
@@ -5790,7 +5790,7 @@
                 "source": "https://github.com/witbix/md_megamenu/tree/bnc-theme",
                 "issues": "https://github.com/witbix/md_megamenu/issues"
             },
-            "time": "2018-10-15T03:49:59+00:00"
+            "time": "2018-10-15T06:15:32+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",

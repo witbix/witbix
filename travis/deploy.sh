@@ -36,7 +36,7 @@ echo "##########################################################################
             PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} DOMAIN_NAME=${DEV_DOMAIN} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} GITHUB_TOKEN=${GITHUB_TOKEN} docker-compose up -d
         fi
 
-        docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} composer install
+        docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} composer install --no-dev --no-progress --optimize-autoloader --no-interaction --no-ansi
         docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} drush si --account-pass=${ADMIN_PASS} --yes;
 
         if [ \$(docker exec \${EXISTING_MASTER_PROJECT} drush status bootstrap 2> /dev/null | grep -c Successful) == 1 ]; then
@@ -60,7 +60,7 @@ echo "##########################################################################
             cd ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8}
             cp .env.example .env
             PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} DOMAIN_NAME=${PRO_DOMAIN} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} GITHUB_TOKEN=${GITHUB_TOKEN} docker-compose up -d
-            docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} composer install
+            docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} composer install --no-dev --no-progress --optimize-autoloader --no-interaction --no-ansi
             docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} drush si --account-pass=${ADMIN_PASS} --yes;
             docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} drush -y cim --partial
             docker exec -i ${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}-${TRAVIS_COMMIT::8} drush -y csim live_config

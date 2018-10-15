@@ -4,10 +4,10 @@ services:
 env:
   global:
   - DEPLOY_USER=travis
-  - SERVER_IP=139.59.84.238
+  - SERVER_IP=142.93.213.169
   - PRO_DOMAIN=witbix.com
   - DEV_DOMAIN=dev.witbix.com
-  - secure: mDvwRLguCSRN48SMfOHavBLhqN/HrobWFm9q1ir5vOJHBR+LWhFQ3Xyo7HTesnfdZyV/BYu2rNGpNoaIu2GUN/S9SJfxU+gnBYiLm0nHG9cRKbOh+M98mxzItyWayPCkC2YjGE2n52BKkV1oTI+Y422yz9Y18oQl2eVoSo6tJQSzjZM+YugALuYEuwwjgjgSIFk0wH0nw6I1GKvUycarO4vXv4vbrc8QNwM6ic91v5Ct1/9VUbt3GgDeraiYOFxbhWV/ykLxwX9GK/73WhdnmNI+qI8XpXO7znNSdJv8wxo5pfPcA6t4wlzaC8iGSyT4jgHrZg3QusaDQ8ZO2NIRV7Ib69pl/8TsA1s1iz3p6EP6DhP3kz3ALOIFI2e8LxzoY11KimZv7HA0jpU6ByF9p3omYRgxV0vwKDPyQpF9HhLttJs+9XPAyiOY9llq3rkrg7mxOiKlm2UA6R5Zly8Sr7bYiq5TEgc4uDjszweAU5vo2z3jGJfRA0cj28ehkEfiRcy+qa+YIce5p4XnIhPLs6ncO7PNuujspjI8W1B9UXU/n2xXQ+ioPo50ysO2DcNxIf3RZjYfDZLtVE24rgaWCn1eTvAnIwpo3QhoNmfQGIuWr0DyLl9cCNk+9ZeJ3+TJ6fAUwZ+bY3MyzjPdlW5WKx9GrWOKZAxSDKl3wt/LIUY=
+  - secure: "DxvZCScq24XD9TwuRruNlfC9sfAxF9O0hgXmjrPBkTszBesOzFjD/6fG+JCNxTJKEmPlZSjhLjX21AkN17EK4cO5Hl34A07b0FDURpggDOcNctKWEq+ZafdUGDOVo+HyhbvmdgkMfaQ6jqsC3Bq73W/BsTIEKGX14eU6VUl4vC4L7y1KWHNGc/vbrqUmlZEeJ8ek+m8opYbovstp2h4RTwQw1Ezv8LVliu4xlMSkhcqx+bDvnmir/mqFJdwA4gmulGxGZwuiEI/cwKWhwjMTcJ0t6kiJa6DrLs5sZdlD2STRbx6TQuliRmb0l6rWNffHexvc3IunFgK6Vh/Th5Pua43lVWVVjGLNPvfEcp4X9dpSPkOf5RbHbxvB0AGaVk10LwbghDE7aNfsNovdbE9Xk90nUq97CJGp4IGXQSS52ZUKhMdX0oK2EOcgX6G3eZxJ8vIck237nbHPm6JEwkUJYx0BAKEQL/kmCeS783BTf/tCbjTjzsxmnfEuy+Ko9RLssRF4S57kH/3us5XsCFs7AHDbWtGNDuw62Q7Z4/IKGjooLXMvprNleuxGLfP5T+CJb8P/K97tGSoDPrWPsUm3IB2+9qN7A1vtFcyxNt1k6cpI5t7kx3CCW+nvgswj31mpab1WdtPFLJzmygwfCLkZKyhP202/WCgfV13fFGHOM1I="
 before_install:
 - openssl aes-256-cbc -K $encrypted_6c01b584eccb_key -iv $encrypted_6c01b584eccb_iv
   -in secrets.tar.enc -out secrets.tar -d
@@ -17,7 +17,7 @@ before_script:
 script:
 - "./travis/drupal-build.sh"
 after_success:
-- chmod 600 secrets/${DEPLOY_USER}_rsa
+- chmod 600 secrets/ssh/${DEPLOY_USER}_rsa
 - eval $(ssh-agent)
-- ssh-add secrets/${DEPLOY_USER}_rsa
+- ssh-add secrets/ssh/${DEPLOY_USER}_rsa
 - "./travis/deploy.sh"

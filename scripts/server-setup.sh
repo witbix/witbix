@@ -5,9 +5,9 @@ read -p 'Server Address ' SERVER
 read -p 'Deploy User Name ' USER
 
 # Generate ssh key pair
-ssh-keygen -t rsa -N "" -f secrets/${USER}_rsa
-PUB_KEY=$(cat ${USER}_rsa.pub)
-PRV_KEY=$(cat ${USER}_rsa)
+ssh-keygen -t rsa -N "" -f secrets/ssh/${USER}_rsa
+PUB_KEY=$(cat secrets/ssh/${USER}_rsa.pub)
+PRV_KEY=$(cat secrets/ssh/${USER}_rsa)
 
 
 ssh -t -o StrictHostKeyChecking=no root@"${SERVER}" << EOF

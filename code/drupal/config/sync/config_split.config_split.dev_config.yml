@@ -4,6 +4,7 @@ status: true
 dependencies: {  }
 id: dev_config
 label: 'Development Configuration'
+description: ''
 folder: ../config/dev_config
 module:
   devel: 0

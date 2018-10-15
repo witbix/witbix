@@ -4,7 +4,4 @@
 
 # Ignore sensitive files
 .env
-
-
-# exception to the rule
-!/code/drupal/web/sites/*/files/awe-menu-css
+/secrets

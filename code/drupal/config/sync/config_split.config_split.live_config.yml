@@ -4,6 +4,7 @@ status: true
 dependencies: {  }
 id: live_config
 label: 'Live Configuration'
+description: ''
 folder: ../config/live_config
 module: {  }
 theme: {  }

@@ -7,6 +7,8 @@ mag=$'\e[1;35m'
 cyn=$'\e[1;36m'
 white=$'\e[0m'
 
+set +ex
+
 # Check if any chnages has been made inside "docker" directory
 if git diff HEAD^ --exit-code --name-only docker
 then
@@ -23,7 +25,7 @@ else
     docker network create -d bridge traefik-network
     docker run -d --network=traefik-network -p 80:80 -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock --name=traefik traefik:latest --api --docker
     cp .env.example .env
-    docker-compose up -d
+    GITHUB_TOKEN=$GITHUB_TOKEN docker-compose up -d
     docker exec -it test composer install
     docker exec -it test drush si --yes
  

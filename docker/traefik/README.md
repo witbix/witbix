@@ -1,4 +1,4 @@
-# Enable SSL 
+# Enable custom SSL with Traefik  
 
 Step-1 Execute below command on your local machine. It will generate two files ca.key & ca.csr
 ````
@@ -15,16 +15,8 @@ Step-3 (Concatenate ca.crt which was produced earlier in your local machine and 
 cat ca.crt ca.ca-bundle >>ca_chain.crt 
 ````
 
-Step-4 (Update traefik.toml)
+Step-4 (Uncomment below code inside traefik.toml)
 ```
-defaultEntryPoints = ["http", "https"]
-[entryPoints]
-  [entryPoints.http]
-  address = ":80"
-    [entryPoints.http.redirect]
-    entryPoint = "https"
-  [entryPoints.https]
-  address = ":443"
     [entryPoints.https.tls]
       [[entryPoints.https.tls.certificates]]
       certFile = "/etc/traefik/ca_chain.crt"
@@ -37,4 +29,4 @@ docker run -d -p 80:80 -p 443:443 -v /var/run/docker.sock:/var/run/docker.sock -
 ```
 
 
-Note : For this project you just have uncomment all contents inside traefik.toml and replace the ca.key and ca_chain.crt inside travis/traefik dir with your certificates. Don't forget to encrypt your ca.key before pushing it to github 
+docker run -d --network=traefik-network -p 80:80 -p 443:443 -v /var/run/docker.sock:/var/run/docker.sock -v $PWD/docker/traefik:/etc/traefik -v $PWD/secrets/ssl:/etc/ssl --name=traefik traefik:latest --api --docker

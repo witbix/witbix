@@ -1,5 +1,8 @@
+# debug = true
+
 defaultEntryPoints = ["http", "https"]
 
+# Force HTTPS
 [entryPoints]
   [entryPoints.http]
   address = ":80"
@@ -8,6 +11,38 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
   address = ":443"
     [entryPoints.https.tls]
-      [[entryPoints.https.tls.certificates]]
-      certFile = "/etc/ssl/ca_chain.crt"
-      keyFile = "/etc/ssl/ca.key"
+
+# Uncomment below snippet if you want use any custom or purchased ssl certificate for any particular domain.
+[[entryPoints.https.tls.certificates]]
+certFile = "/etc/ssl/ca_chain.crt"
+keyFile = "/etc/ssl/ca.key"
+
+
+# Uncomment below snippets if you want to use let's encrypt free ssl certificates (You can use both purchased and
+# let's encrypt also). If both enabled then first it checks if any purchased ssl exits and then create ssl for rest domains.
+[acme]
+email = "email@example.com"        #any email id will work
+storage="/etc/traefik/acme.json"
+entryPoint = "https"
+# acmeLogging=true
+
+# Use this server for developmnt purpose as it can generate unlimited but less secure ssl certificates for testing only.
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+
+# It creates certificates for all Host rules. If false then you have to declare/uncomment `acme.domain` explicitly.
+onHostRule = true
+
+# You must have to enable one of the challenge either http or dns. Dns is required only for wildcard domains
+[acme.httpChallenge]
+  entryPoint = "http"
+
+# To enable dns challenge you have to pass appropriate env variable to traefik container as given
+# in the link  https://docs.traefik.io/configuration/acme/#provider. Note you can use only one challenge http or dns
+#[acme.dnsChallenge]
+#  provider = "namecheap"
+#  delayBeforeCheck = 0
+
+#[[acme.domains]]
+#   main = "witbix.com"
+#[[acme.domains]]
+#   main = "*.witbix.com"

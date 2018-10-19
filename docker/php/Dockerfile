@@ -2,6 +2,8 @@
 FROM php:7.2-fpm-alpine
 
 ENV GITHUB_TOKEN=XXXXXXXXXXXXXXXXXXXXXXX
+RUN addgroup -g 101 nginx && \
+    adduser -D -u 100 -G nginx -s /bin/sh nginx
 
 # Install the PHP extensions we need
 # postgresql-dev is needed for https://bugs.alpinelinux.org/issues/3642

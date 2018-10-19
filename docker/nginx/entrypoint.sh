@@ -8,7 +8,7 @@ sed -i "s% domain_name% $DOMAIN_NAME%" /etc/nginx/sites-enabled/"$DOMAIN_NAME"
 sed -i "s% public_html_root% /var/www/$PROJECT_NAME/web%" /etc/nginx/sites-enabled/"$DOMAIN_NAME"
 sed -i "s% php_container_name% "$PROJECT_NAME"%" /etc/nginx/sites-enabled/"$DOMAIN_NAME"
 
-mkdir -p /var/www/"$PROJECT_NAME"
+mkdir -p /var/www/"$PROJECT_NAME"/web
 cp -a -u /drupal/"$DRUPAL_VERSION".x/. /var/www/"$PROJECT_NAME"/ 2>/dev/null || :
 
 cat >/var/www/"$PROJECT_NAME"/.env << EOF
@@ -18,4 +18,8 @@ MYSQL_USER=$MYSQL_USER
 MYSQL_PASSWORD=$MYSQL_PASSWORD
 MYSQL_PORT=$MYSQL_PORT
 EOF
+
+chown -R :nginx /var/www/"$PROJECT_NAME"/web
+chmod -R 2750 /var/www/"$PROJECT_NAME"/web
+
 exec "$@"

@@ -2,26 +2,13 @@ version: "3.3"
 
 services:
 
-  php:
-    container_name: ${PROJECT_NAME}
-#    build: ./docker/php
-    image: witbix/php
-    restart: always
-    volumes:
-      - ./code/drupal:/var/www/${PROJECT_NAME}:cached
-    working_dir: /var/www/${PROJECT_NAME}
-    environment:
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
-    networks:
-      - drupal
-
   nginx:
     container_name: ${PROJECT_NAME}.nginx
 #    build: ./docker/nginx
     image: witbix/nginx
     restart: always
     volumes:
-      - ./code/drupal:/var/www/${PROJECT_NAME}:cached
+      - drupal:/var/www/${PROJECT_NAME}:cached
     working_dir: /var/www/${PROJECT_NAME}
     environment:
       PROJECT_NAME: ${PROJECT_NAME}
@@ -37,20 +24,43 @@ services:
     networks:
       - drupal
 
+  php:
+    container_name: ${PROJECT_NAME}
+#    build: ./docker/php
+    image: witbix/php
+    restart: always
+    volumes:
+      - drupal:/var/www/${PROJECT_NAME}:cached
+    working_dir: /var/www/${PROJECT_NAME}
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    networks:
+      - drupal
+
   mariadb:
     container_name: ${PROJECT_NAME}.mariadb
 #    build: ./docker/mariadb
     image: witbix/mariadb
     restart: always
-#    volumes:
-#      - ./code/drupal/db-dump/drupal.sql:/docker-entrypoint-initdb.d/dump.sql
+    volumes:
+      - database:/var/lib/mysql
     environment:
        MYSQL_USER: ${MYSQL_USER}
        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
        MYSQL_DATABASE: ${MYSQL_DATABASE}
-       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}   
+       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       - drupal
+
+volumes:
+  drupal:
+    driver: local
+    driver_opts:
+      type: bind
+      device: $PWD/code/drupal
+      o: bind
+  database:
+    driver: local
 
 networks:
   drupal:

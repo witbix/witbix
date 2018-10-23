@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/"$PROJECT_NAME"/.gitkeep)
 
 mkdir -p /etc/nginx/sites-enabled
 cp /etc/nginx/conf.d/drupal-"$DRUPAL_VERSION".conf /etc/nginx/sites-enabled/"$DOMAIN_NAME"
@@ -19,7 +20,11 @@ MYSQL_PASSWORD=$MYSQL_PASSWORD
 MYSQL_PORT=$MYSQL_PORT
 EOF
 
-chown -R :nginx /var/www/"$PROJECT_NAME"/web
-chmod -R 2750 /var/www/"$PROJECT_NAME"/web
+
+chown -R www-data:${HOST_CURRENT_USER_ID} /var/www/"$PROJECT_NAME"
+chmod -R 2570 /var/www/"$PROJECT_NAME"
+
+chown -R nginx:${HOST_CURRENT_USER_ID} /var/www/"$PROJECT_NAME"/web
+chmod -R 2570 /var/www/"$PROJECT_NAME"/web
 
 exec "$@"

@@ -1,7 +1,9 @@
 # From https://www.drupal.org/docs/8/system-requirements/drupal-8-php-requirements
 FROM php:7.2-fpm-alpine
 
-ENV GITHUB_TOKEN=XXXXXXXXXXXXXXXXXXXXXXX
+ENV GITHUB_TOKEN=XXXXXXXXXXXXXXXXXXXXXXX \
+    COMPOSER_HOME=/home/www-data/.composer
+
 RUN addgroup -g 101 nginx && \
     adduser -D -u 100 -G nginx -s /bin/sh nginx
 
@@ -44,10 +46,14 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-
 RUN  set ex \
   # Install Composer( Requires git )
-  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -- --filename=composer \
+  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin -- --filename=composer-call \
+  && chown www-data /home/www-data/.composer \
+  # Create a helper script to call composer always as user `www-data`
+  && printf '%s\n' "#!/bin/sh" "su www-data -s /bin/sh <<EOF" "composer-call \$@" "EOF" > /usr/local/bin/composer \
+  && chmod +x /usr/local/bin/composer \
+  # Install git
   && apk add --no-cache git \
   # Install Prestissimo to force composer to download packages in parallel
   && composer global require hirak/prestissimo \

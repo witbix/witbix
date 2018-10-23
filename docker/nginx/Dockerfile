@@ -12,7 +12,8 @@ ENV PROJECT_NAME=test \
     MYSQL_DATABASE=drupal \
     MYSQL_USER=root \
     MYSQL_PASSWORD=pass \
-    MYSQL_PORT=3306
+    MYSQL_PORT=3306 \
+    HOST_USER=admin
 
 COPY nginx.conf /etc/nginx
 COPY conf.d /etc/nginx/conf.d

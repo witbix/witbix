@@ -2,10 +2,14 @@
 FROM php:7.2-fpm-alpine
 
 ENV GITHUB_TOKEN=XXXXXXXXXXXXXXXXXXXXXXX \
-    COMPOSER_HOME=/home/www-data/.composer
+    COMPOSER_HOME=/var/www/.composer
 
 RUN addgroup -g 101 nginx && \
-    adduser -D -u 100 -G nginx -s /bin/sh nginx
+    adduser -D -u 100 -G nginx -s /bin/sh nginx && \
+    adduser -D -u 2000 -s /bin/sh -h /var/www/ deploy && \
+    apk --no-cache add shadow && \
+    apk add --no-cache su-exec && \
+    apk add --no-cache inotify-tools 
 
 # Install the PHP extensions we need
 # postgresql-dev is needed for https://bugs.alpinelinux.org/issues/3642
@@ -47,26 +51,37 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 RUN  set ex \
+#  && echo "composer(){ su-exec deploy composer.phar \"\$@\"; }" >> /etc/profile \
   # Install Composer( Requires git )
-  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin -- --filename=composer-call \
-  && chown www-data /home/www-data/.composer \
-  # Create a helper script to call composer always as user `www-data`
-  && printf '%s\n' "#!/bin/sh" "su www-data -s /bin/sh <<EOF" "composer-call \$@" "EOF" > /usr/local/bin/composer \
+  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin -- --filename=composer.phar \
+  # Create a helper script to call composer.phar always as user `deploy`
+  && echo "su-exec deploy composer.phar \"\$@\";" >> /usr/local/bin/composer \
   && chmod +x /usr/local/bin/composer \
+#  && printf '%s\n' "#!/bin/sh" "su deploy -s /bin/sh <<EOF" "/usr/local/bin/php /usr/local/bin/composer.phar \$@" "EOF" > /usr/local/bin/my-composer \
+#  && chmod +x /usr/local/bin/my-composer \
+  && chown deploy /var/www/.composer \
   # Install git
   && apk add --no-cache git \
   # Install Prestissimo to force composer to download packages in parallel
   && composer global require hirak/prestissimo \
   # Install Drush luncher
-  && wget -O drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
-  && chmod +x drush.phar \
-  && mv drush.phar /usr/local/bin/drush \
+  && wget -O /usr/local/bin/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
+#  && mv drush.phar /usr/local/bin/drush \
+#  && printf '%s\n' "#!/bin/sh" "su deploy -s /bin/sh <<EOF" "/usr/local/bin/php /usr/local/bin/drush.phar \$@" "EOF" > /usr/local/bin/drush \
+  && chmod +x /usr/local/bin/drush.phar \
+  && echo "su-exec deploy drush.phar \"\$@\";" >> /usr/local/bin/drush \
+  && chmod +x /usr/local/bin/drush \
   # Install Mysql-client (Required by Drush)
   && apk add --no-cache mysql-client \
   # Install Drupal console luncher
   && curl https://drupalconsole.com/installer -L -o drupal.phar \
   && mv drupal.phar /usr/local/bin/drupal \
   && chmod +x /usr/local/bin/drupal
+#  && chown deploy /usr/local/bin/php \
+#  && chmod u+s /usr/local/bin/php \
+#  && composer global require hirak/prestissimo \
+#  && chown -R deploy: /var/www/.composer
+
 
 COPY conf.d/* /usr/local/etc/php/conf.d/
 COPY php-fpm.d/* /usr/local/etc/php-fpm.d/

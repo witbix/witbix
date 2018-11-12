@@ -2,12 +2,6 @@
 
 DOCUMENTROOT=web
 
-# Prepare the scaffold files if they are not already present
-if [ ! -f $DOCUMENTROOT/autoload.php ]
-  then
-    composer drupal:scaffold
-fi
-
 # Create these dirs. Required for unit testing
 dirs=""
 dirs="${dirs} modules"
@@ -61,6 +55,6 @@ fi
 if [ ! -d $DOCUMENTROOT/sites/default/files ]
   then
     mkdir $DOCUMENTROOT/sites/default/files
-    chmod 777 $DOCUMENTROOT/sites/default/files
+    chmod -R 777 $DOCUMENTROOT/sites/default/files
     echo "Create a sites/default/files directory with chmod 777"
 fi

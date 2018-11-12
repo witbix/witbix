@@ -1,8 +1,8 @@
 FROM nginx:stable-alpine
 
 # add www-data user becaue php process start as same user
-RUN addgroup -g 82 www-data && \
-    adduser -D -u 82 -G www-data -s /bin/sh www-data
+RUN adduser -D -u 82 -s /bin/sh www-data && \
+    adduser -D -u 2000 -s /bin/sh deploy
 
 # Drupal specific enviroment variables
 ENV PROJECT_NAME=test \
@@ -19,6 +19,7 @@ COPY nginx.conf /etc/nginx
 COPY conf.d /etc/nginx/conf.d
 COPY entrypoint.sh /
 COPY drupal /drupal
+RUN chown -R deploy: /drupal/*
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]

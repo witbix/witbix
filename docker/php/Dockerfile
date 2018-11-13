@@ -20,6 +20,7 @@ RUN set -ex \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		postgresql-dev \
+		${PHPIZE_DEPS} \
 	&& docker-php-ext-configure gd \
 		--with-freetype-dir=/usr/include/ \
 		--with-jpeg-dir=/usr/include/ \
@@ -30,6 +31,7 @@ RUN set -ex \
 		pdo_mysql \
 		pdo_pgsql \
 		zip \
+	&& pecl install xdebug \
 	&& runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
 			| tr ',' '\n' \
@@ -50,15 +52,25 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
+RUN { \
+		echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)"; \
+		echo 'xdebug.remote_enable=1'; \
+		echo 'xdebug.remote_autostart=off'; \
+        echo 'xdebug.remote_handler=dbgp'; \
+        echo 'xdebug.remote_port=9000'; \
+        echo 'xdebug.remote_connect_back=0'; \
+        echo 'xdebug.idekey=docker'; \
+        echo 'xdebug.remote_host=host.docker.internal'; \
+        echo 'xdebug.extended_info = 1'; \
+	} > /usr/local/etc/php/conf.d/xdebug.ini
+
+
 RUN  set ex \
-#  && echo "composer(){ su-exec deploy composer.phar \"\$@\"; }" >> /etc/profile \
   # Install Composer( Requires git )
   && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin -- --filename=composer.phar \
   # Create a helper script to call composer.phar always as user `deploy`
   && echo "su-exec deploy composer.phar \"\$@\";" >> /usr/local/bin/composer \
   && chmod +x /usr/local/bin/composer \
-#  && printf '%s\n' "#!/bin/sh" "su deploy -s /bin/sh <<EOF" "/usr/local/bin/php /usr/local/bin/composer.phar \$@" "EOF" > /usr/local/bin/my-composer \
-#  && chmod +x /usr/local/bin/my-composer \
   && chown deploy /var/www/.composer \
   # Install git
   && apk add --no-cache git \
@@ -66,8 +78,6 @@ RUN  set ex \
   && composer global require hirak/prestissimo \
   # Install Drush luncher
   && wget -O /usr/local/bin/drush.phar https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
-#  && mv drush.phar /usr/local/bin/drush \
-#  && printf '%s\n' "#!/bin/sh" "su deploy -s /bin/sh <<EOF" "/usr/local/bin/php /usr/local/bin/drush.phar \$@" "EOF" > /usr/local/bin/drush \
   && chmod +x /usr/local/bin/drush.phar \
   && echo "su-exec deploy drush.phar \"\$@\";" >> /usr/local/bin/drush \
   && chmod +x /usr/local/bin/drush \
@@ -77,10 +87,6 @@ RUN  set ex \
   && curl https://drupalconsole.com/installer -L -o drupal.phar \
   && mv drupal.phar /usr/local/bin/drupal \
   && chmod +x /usr/local/bin/drupal
-#  && chown deploy /usr/local/bin/php \
-#  && chmod u+s /usr/local/bin/php \
-#  && composer global require hirak/prestissimo \
-#  && chown -R deploy: /var/www/.composer
 
 
 COPY conf.d/* /usr/local/etc/php/conf.d/

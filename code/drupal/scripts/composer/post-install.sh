@@ -55,6 +55,6 @@ fi
 if [ ! -d $DOCUMENTROOT/sites/default/files ]
   then
     mkdir $DOCUMENTROOT/sites/default/files
-    chmod -R 777 $DOCUMENTROOT/sites/default/files
+    chmod -R 2777 $DOCUMENTROOT/sites/default/files
     echo "Create a sites/default/files directory with chmod 777"
 fi

@@ -1,40 +1,41 @@
-version: "3.3"
+version: "3.5"
 
 services:
+
+  php:
+    container_name: ${PROJECT_NAME}
+    build: ./docker/drupal-tools
+    image: dbjpanda/drupal-tools
+    restart: always
+    working_dir: /var/www/${PROJECT_NAME}
+    volumes:
+      - drupal:/var/www/${PROJECT_NAME}:cached
+      - staticfiles:/tmp/files
+    environment:
+      - PROJECT_NAME
+      - DRUPAL_VERSION
+      - MYSQL_HOSTNAME
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_PORT
+    networks:
+      - drupal
 
   nginx:
     container_name: ${PROJECT_NAME}.nginx
     build: ./docker/nginx
     image: witbix/nginx
     restart: always
+    working_dir: /var/www/${PROJECT_NAME}
     volumes:
       - drupal:/var/www/${PROJECT_NAME}:cached
-    working_dir: /var/www/${PROJECT_NAME}
-    environment:
-      PROJECT_NAME: ${PROJECT_NAME}
-      DOMAIN_NAME: ${DOMAIN_NAME}
-      DRUPAL_VERSION: ${DRUPAL_VERSION}
-      MYSQL_HOSTNAME: ${PROJECT_NAME}.mariadb
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_PORT: ${MYSQL_PORT}
+      - staticfiles:/tmp/files
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
-    networks:
-      - drupal
-
-  php:
-    container_name: ${PROJECT_NAME}
-    build: ./docker/php
-    image: witbix/php
-    restart: always
-    volumes:
-      - drupal:/var/www/${PROJECT_NAME}:cached
-    working_dir: /var/www/${PROJECT_NAME}
     environment:
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
-      PROJECT_NAME: ${PROJECT_NAME}
+      - PROJECT_NAME
+      - DOMAIN_NAME
     networks:
       - drupal
 
@@ -46,21 +47,24 @@ services:
     volumes:
       - database:/var/lib/mysql
     environment:
-       MYSQL_USER: ${MYSQL_USER}
-       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-       MYSQL_DATABASE: ${MYSQL_DATABASE}
-       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
     networks:
       - drupal
+
 
 volumes:
   drupal:
     driver: local
     driver_opts:
-      type: bind
+      type: none
       device: $PWD/code/drupal
       o: bind
   database:
+    driver: local
+  staticfiles:
     driver: local
 
 networks:

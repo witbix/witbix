@@ -15,7 +15,6 @@ RUN set -ex \
     && chmod u+s /usr/sbin/nginx
 
 
-
 COPY nginx.conf /etc/nginx
 COPY vhost-templates /vhost-templates
 COPY entrypoint.sh /

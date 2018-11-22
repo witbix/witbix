@@ -3,8 +3,8 @@
 set -ex
 
 
-HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME}/.gitkeep)
-#HOST_CURRENT_USER_ID=1500
+#HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME}/.gitkeep)
+HOST_CURRENT_USER_ID=1500
 
 if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
 gosu root usermod -u ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :

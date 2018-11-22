@@ -49,7 +49,8 @@ RUN set -ex \
     && wget -O /usr/local/bin/drupal https://drupalconsole.com/installer \
     && chmod +x /usr/local/bin/drupal \
     && mkdir /tmp/files \
-    && chmod o+w /tmp/files
+    && chmod 777 /tmp/files
+
 
 COPY conf.d /etc/php7/conf.d
 COPY php-fpm.d /etc/php7/php-fpm.d

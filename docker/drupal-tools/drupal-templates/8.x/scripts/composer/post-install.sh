@@ -2,6 +2,12 @@
 
 DOCUMENTROOT=web
 
+# Prepare the scaffold files if they are not already present
+if [ ! -f $DOCUMENTROOT/autoload.php ]
+  then
+    composer drupal:scaffold
+fi
+
 # Create these dirs. Required for unit testing
 dirs=""
 dirs="${dirs} modules"
@@ -39,23 +45,27 @@ $databases['default']['default'] = array (
  );
 EOF
     fi
-    chmod 666 $DOCUMENTROOT/sites/default/settings.php
-    echo "Create a sites/default/settings.php file with chmod 666"
+    chmod 740 $DOCUMENTROOT/sites/default/settings.php
+    echo "Create a sites/default/settings.php file with chmod 740"
 fi
 
 # Prepare the services file for installation
 if [ ! -f $DOCUMENTROOT/sites/default/services.yml ]
   then
     cp $DOCUMENTROOT/sites/default/default.services.yml $DOCUMENTROOT/sites/default/services.yml
-    chmod 666 $DOCUMENTROOT/sites/default/services.yml
-    echo "Create a sites/default/services.yml services.yml file with chmod 666"
+    chmod 740 $DOCUMENTROOT/sites/default/services.yml
+    echo "Create a sites/default/services.yml services.yml file with chmod 740"
 fi
 
 # Prepare the files directory for installation
 if [ ! -d $DOCUMENTROOT/sites/default/files ]
   then
-#    mkdir $DOCUMENTROOT/sites/default/files
     ln -s /tmp/files/ web/sites/default/
-#    chmod -R 2777 $DOCUMENTROOT/sites/default/files
-    echo "Create a sites/default/files directory with chmod 777"
+    echo "Create a symbolic link from sites/default/files to /tmp/files"
 fi
+
+# Prepare config and content directories for synchronization of configuration and content
+mkdir -p config/sync content/sync && touch config/sync/.gitkeep content/sync/.gitkeep
+
+# Set appropriate permissions for deploy:www-php as per project need
+chmod -R g-w,o-rw .

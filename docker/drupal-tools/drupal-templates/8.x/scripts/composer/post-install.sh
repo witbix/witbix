@@ -68,4 +68,4 @@ fi
 mkdir -p config/sync content/sync && touch config/sync/.gitkeep content/sync/.gitkeep
 
 # Set appropriate permissions for deploy:www-php as per project need
-chmod -R g-w,o-rw .
+#chmod -R go-w .

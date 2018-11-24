@@ -19,7 +19,7 @@ class SiteInstallCommands extends DrushCommands
      *
      */
     public function installChmod() {
-        drush_shell_exec('chmod -R 740 sites/default');
-//        $this->logger()->success(dt('Executing post install command'));
+        drush_shell_exec('chmod -R u+w sites/default');
+//        $this->logger()->success(dt(''));
     }
 }

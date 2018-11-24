@@ -6,7 +6,8 @@ ENV PROJECT_NAME=test \
     MYSQL_DATABASE=drupal \
     MYSQL_USER=test \
     MYSQL_PASSWORD=pass \
-    MYSQL_PORT=3306
+    MYSQL_PORT=3306 \
+    ENV='/home/deploy/.profile'
 
 RUN set -ex \
     && addgroup -g 1000 deploy \
@@ -49,7 +50,8 @@ RUN set -ex \
     && wget -O /usr/local/bin/drupal https://drupalconsole.com/installer \
     && chmod +x /usr/local/bin/drupal \
     && mkdir /tmp/files \
-    && chmod 777 /tmp/files
+    && chmod 777 /tmp/files \
+    && echo "umask u=rwx,g=rx,o=" > /home/deploy/.profile
 
 
 COPY conf.d /etc/php7/conf.d

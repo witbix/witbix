@@ -3,15 +3,15 @@
 set -ex
 
 
-#HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME}/.gitkeep)
-HOST_CURRENT_USER_ID=1500
+HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME})
+#HOST_CURRENT_USER_ID=1500
 
 if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
 gosu root usermod -u ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 fi
 
-cp -a -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
+cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"

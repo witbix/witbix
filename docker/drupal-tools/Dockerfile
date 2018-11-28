@@ -43,6 +43,7 @@ RUN set -ex \
             composer@ec \
             shadow \
             gosu@et \
+            acl \
     && chmod u+s /usr/sbin/php-fpm7 \
     && chmod u+s /usr/bin/gosu \
     && wget -O /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \

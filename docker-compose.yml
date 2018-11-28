@@ -2,6 +2,11 @@ version: "3.5"
 
 services:
 
+#  local-persist:
+#    image: cwspear/docker-local-persist-volume-plugin
+#    volumes:
+#      - /run/docker/plugins/:/run/docker/plugins/
+
   php:
     container_name: ${PROJECT_NAME}
     build: ./docker/drupal-tools
@@ -9,7 +14,7 @@ services:
     restart: always
     working_dir: /var/www/${PROJECT_NAME}
     volumes:
-      - drupal:/var/www/${PROJECT_NAME}:cached
+      - ./code/drupal:/var/www/${PROJECT_NAME}:cached
       - staticfiles:/tmp/files
     environment:
       - PROJECT_NAME
@@ -29,7 +34,7 @@ services:
     restart: always
     working_dir: /var/www/${PROJECT_NAME}
     volumes:
-      - drupal:/var/www/${PROJECT_NAME}:cached
+      - ./code/drupal:/var/www/${PROJECT_NAME}:cached
       - staticfiles:/tmp/files
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
@@ -56,12 +61,20 @@ services:
 
 
 volumes:
-  drupal:
-    driver: local
-    driver_opts:
-      type: none
-      device: $PWD/code/drupal
-      o: bind
+
+#  drupal:
+#    driver: local-persist
+#    driver_opts:
+#      mountpoint: $PWD/src
+
+
+
+#  drupal:
+#    driver: local
+#    driver_opts:
+#      type: none
+#      device: $PWD/code/drupal
+#      o: bind
   database:
     driver: local
   staticfiles:

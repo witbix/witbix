@@ -1,17 +1,17 @@
 #!/bin/sh
 
 set -ex
+umask u=rwx,g=rx,o=
 
-
-HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME})
-#HOST_CURRENT_USER_ID=1500
+#HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME})
+HOST_CURRENT_USER_ID=1500
 
 if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
 gosu root usermod -u ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 fi
 
-cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
+gosu root cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"

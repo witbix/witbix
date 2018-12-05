@@ -32,9 +32,9 @@ services:
     build: ./docker/nginx
     image: witbix/nginx
     restart: always
-    working_dir: /var/www/${PROJECT_NAME}
+   # working_dir: /var/www/${PROJECT_NAME}/web
     volumes:
-      - ./code/drupal:/var/www/${PROJECT_NAME}:cached
+      - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:cached
       - staticfiles:/tmp/files
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
@@ -43,6 +43,8 @@ services:
       - DOMAIN_NAME
     networks:
       - drupal
+    depends_on:
+      - php
 
   mariadb:
     container_name: ${PROJECT_NAME}.mariadb

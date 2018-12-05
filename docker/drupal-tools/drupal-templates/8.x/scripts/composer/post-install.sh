@@ -22,6 +22,12 @@ for dir in ${dirs}
      fi
 done
 
+# Prepare config and content directories for synchronization of configuration and content
+mkdir -p config/sync content/sync && touch config/sync/.gitkeep content/sync/.gitkeep
+
+# Set appropriate permissions for `web` to be accessed by server
+chmod -R o=rX web
+
 # Prepare the settings file for installation
 if [ ! -f $DOCUMENTROOT/sites/default/settings.php ]
   then
@@ -63,9 +69,3 @@ if [ ! -d $DOCUMENTROOT/sites/default/files ]
     ln -s /tmp/files/ web/sites/default/
     echo "Create a symbolic link from sites/default/files to /tmp/files"
 fi
-
-# Prepare config and content directories for synchronization of configuration and content
-mkdir -p config/sync content/sync && touch config/sync/.gitkeep content/sync/.gitkeep
-
-# Set appropriate permissions for deploy:www-php as per project need
-#chmod -R go-w .

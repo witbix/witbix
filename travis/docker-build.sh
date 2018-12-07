@@ -7,17 +7,24 @@ mag=$'\e[1;35m'
 cyn=$'\e[1;36m'
 white=$'\e[0m'
 
-set +ex
+set -xe
 
-# Check if any chnages has been made inside "docker" directory
-if git diff HEAD^ --exit-code --name-only docker
-then
-    echo $red No chnages inside docker directory $white
-else
-    echo $red Above files have been chnaged inside docker directory. $white
- 
-    # Building imgaes from docker files
+# Check if any changes has been made inside "docker" directory
+
+if [ -n "$(git diff HEAD^ --exit-code --name-only docker/nginx)" ]; then
     docker build -t witbix/nginx ./docker/nginx
+fi
+
+if [ -n "$(git diff HEAD^ --exit-code --name-only docker/php)" ]; then
+    docker build -t witbix/nginx ./docker/php
+fi
+
+if [ -n "$(git diff HEAD^ --exit-code --name-only docker/mariadb)" ]; then
+    docker build -t witbix/nginx ./docker/nginx
+fi
+
+        # Building imgaes from docker files
+
     docker build -t witbix/php ./docker/php
     docker build -t witbix/mariadb ./docker/mariadb
 
@@ -28,7 +35,7 @@ else
     GITHUB_TOKEN=$GITHUB_TOKEN docker-compose up -d
     docker exec -it test composer install
     docker exec -it test drush si --yes
- 
+
     # Push images to Docker Hub
     if [ $(docker exec test drush status bootstrap | grep -c Successful) == 1 ]; then
         echo $grn Drupal has been sucessfully installed. Images are ready to be pushed to Docker Hub $white
@@ -40,7 +47,7 @@ else
         # Clean up
         docker rm -f $(docker ps -a -q)
         docker system prune -f
-        sudo rm -rf ./code/drupal
+        rm -rf ./code/drupal
     else
         echo $red Docker build failed and images are not ready to push to dockerhub $white
         exit 1

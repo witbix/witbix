@@ -1,11 +1,7 @@
 FROM nginx:stable-alpine
 
-ENV PROJECT_NAME=test \
-    DOMAIN_NAME=localhost \
-    DRUPAL_VERSION=8 \
-    ENV='/var/cache/nginx/.profile'
+ENV ENV='/var/cache/nginx/.profile'
 
-# add www-data user becaue php process start as same user
 RUN set -ex \
     && echo '@et http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
     && apk --no-cache add gosu@et \

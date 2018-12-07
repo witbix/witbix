@@ -16,8 +16,13 @@ before_script:
 - "./travis/docker-build.sh"
 script:
 - "./travis/drupal-build.sh"
-after_success:
+before_deploy:
 - chmod 600 secrets/ssh/${DEPLOY_USER}_rsa
 - eval $(ssh-agent)
 - ssh-add secrets/ssh/${DEPLOY_USER}_rsa
-- "./travis/deploy.sh"
+deploy:
+  - provider: script
+    script: ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}"@"${SERVER_IP}" mkdir test
+    skip_cleanup: true
+    on:
+      branch: debug

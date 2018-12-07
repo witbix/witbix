@@ -2,21 +2,17 @@ version: "3.3"
 
 services:
 
-#  local-persist:
-#    image: cwspear/docker-local-persist-volume-plugin
-#    volumes:
-#      - /run/docker/plugins/:/run/docker/plugins/
-
   php:
     container_name: ${PROJECT_NAME}
-    build: ./docker/drupal-tools
-    image: dbjpanda/drupal-tools
+    build: ./docker/php
+    image: witbix/php
     restart: always
     working_dir: /var/www/${PROJECT_NAME}
     volumes:
       - ./code/drupal:/var/www/${PROJECT_NAME}:cached
       - staticfiles:/tmp/files
     environment:
+      - ENVIRONMENT
       - PROJECT_NAME
       - DRUPAL_VERSION
       - MYSQL_HOSTNAME
@@ -24,6 +20,7 @@ services:
       - MYSQL_USER
       - MYSQL_PASSWORD
       - MYSQL_PORT
+      - GITHUB_TOKEN
     networks:
       - drupal
 
@@ -32,7 +29,7 @@ services:
     build: ./docker/nginx
     image: witbix/nginx
     restart: always
-   # working_dir: /var/www/${PROJECT_NAME}/web
+    working_dir: /var/www/${PROJECT_NAME}/web
     volumes:
       - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:cached
       - staticfiles:/tmp/files
@@ -40,6 +37,7 @@ services:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
     environment:
       - PROJECT_NAME
+      - DRUPAL_VERSION
       - DOMAIN_NAME
     networks:
       - drupal
@@ -61,22 +59,7 @@ services:
     networks:
       - drupal
 
-
 volumes:
-
-#  drupal:
-#    driver: local-persist
-#    driver_opts:
-#      mountpoint: $PWD/src
-
-
-
-#  drupal:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: $PWD/code/drupal
-#      o: bind
   database:
     driver: local
   staticfiles:

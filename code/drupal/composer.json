@@ -13,14 +13,32 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/witbix/awe_builder.git"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/witbix/md_megamenu.git"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/witbix/bnc_theme.git"
         }
     ],
     "require": {
+        "witbix/bnc_theme": "dev-8.x-1.x",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",
+        "drupal/config_filter": "^1.3",
+        "drupal/config_split": "^1.4",
+        "drupal/config_suite": "^1.2",
         "drupal/console": "^1.0.2",
         "drupal/core": "^8.6.0",
+        "drupal/default_content_deploy": "^1.0@alpha",
+        "drupal/devel": "^1.2",
         "drush/drush": "^9.0.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
@@ -51,11 +69,9 @@
             "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
         ],
         "post-install-cmd": [
-            "@composer drupal:scaffold",
             "sh ./scripts/composer/post-install.sh"
         ],
         "post-update-cmd": [
-            "@composer drupal:scaffold",
             "sh ./scripts/composer/post-install.sh"
         ]
     },
@@ -76,6 +92,7 @@
                 ".editorconfig": "../.editorconfig",
                 ".gitattributes": "../.gitattributes"
             }
-        }
+        },
+        "patches-file": "composer.patches.json"
     }
 }

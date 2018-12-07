@@ -37,3 +37,11 @@ or
 #      type: none
 #      device: $PWD/code/drupal
 #      o: bind
+
+find web -type f -perm /o=w
+
+wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/usr/local/bin -- --filename=composer -- --quiet
+
+wget https://composer.github.io/snapshots.pub -O /home/deploy/.composer/keys.dev.pub
+
+wget https://composer.github.io/releases.pub -O /home/deploy/.composer/keys.tags.pub

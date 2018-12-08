@@ -7,32 +7,12 @@ read -p 'Deploy User Name ' USER
 # Generate ssh key pair
 ssh-keygen -t rsa -N "" -f secrets/ssh/${USER}_rsa
 PUB_KEY=$(cat secrets/ssh/${USER}_rsa.pub)
-PRV_KEY=$(cat secrets/ssh/${USER}_rsa)
-
 
 ssh -t -o StrictHostKeyChecking=no root@"${SERVER}" << EOF
-sudo adduser --disabled-password --gecos "" ${USER}
-echo "travis ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USER}
-chmod 0440 /etc/sudoers.d/${USER}
-sudo usermod -a -G docker ${USER}
-
-sudo su ${USER}
-cd ~
-mkdir ~/.ssh
-chmod 700 ~/.ssh
+adduser --disabled-password --gecos "" ${USER}
+usermod -a -G docker ${USER}
+su ${USER}
+mkdir -p /home/${USER}/.ssh
+chmod 700 /home/${USER}/.ssh
 echo "${PUB_KEY}" >> ~/.ssh/authorized_keys
-
-# Add ssh key to help cloning private github repo
-echo "${PRV_KEY}" >> ~/.ssh/github_rsa
-chmod 600 ~/.ssh/github_rsa
-eval \$(ssh-agent)
-ssh-add ~/.ssh/github_rsa
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-echo IdentityFile ~/.ssh/github_rsa >> ~/.ssh/config
 EOF
-
-echo *********************************************************************************************************
-echo "Go to https://github.com/"$(git config --get travis.slug)"/settings/keys/new and add the below text :-"
-echo ---------------------------------------------------------------------------------------------------------
-echo ${PUB_KEY}
-echo ---------------------------------------------------------------------------------------------------------

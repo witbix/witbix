@@ -18,10 +18,9 @@ before_script:
 - "./scripts/prepare-env.sh"
 script:
 - "./scripts/drupal-build.sh"
-- ls -al
 deploy:
 - provider: script
-  script: ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}"@"${SERVER_IP}" mkdir test
+  script: "./scripts/deploy.sh"
   skip_cleanup: true
   on:
     branch: debug

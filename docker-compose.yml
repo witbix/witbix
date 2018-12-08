@@ -4,7 +4,7 @@ services:
 
   php:
     container_name: ${PROJECT_NAME}
-    build: ./docker/php
+#    build: ./docker/php
     image: witbix/php
     restart: always
     working_dir: /var/www/${PROJECT_NAME}
@@ -26,7 +26,7 @@ services:
 
   nginx:
     container_name: ${PROJECT_NAME}.nginx
-    build: ./docker/nginx
+#    build: ./docker/nginx
     image: witbix/nginx
     restart: always
     working_dir: /var/www/${PROJECT_NAME}/web

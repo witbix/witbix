@@ -18,10 +18,6 @@ before_script:
 - ./scripts/prepare-env.sh
 script:
 - ./scripts/drupal-build.sh
-before_deploy:
-- chmod 600 secrets/ssh/${DEPLOY_USER}_rsa
-- eval $(ssh-agent)
-- ssh-add secrets/ssh/${DEPLOY_USER}_rsa
 deploy:
   - provider: script
     script: ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}"@"${SERVER_IP}" mkdir test

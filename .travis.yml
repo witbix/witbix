@@ -21,7 +21,7 @@ script:
 - id -u
 - ls -al code/drupal
 - docker exec -it test id -u
-- docker exec -it test cat id.md
+- docker exec -it test cat /var/www/test/id.md
 deploy:
 - provider: script
   script: "./scripts/deploy.sh"

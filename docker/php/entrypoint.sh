@@ -29,11 +29,14 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 # Set github api key to allow composer to access private repo
 composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
-gosu root chgrp -R www-php /var/www/${PROJECT_NAME}
-gosu root chmod -R g+s /var/www/${PROJECT_NAME}
+gosu root chgrp www-php /var/www/${PROJECT_NAME}/*
+gosu root chmod g+s /var/www/${PROJECT_NAME}
+
+gosu root chgrp -R www /var/www/${PROJECT_NAME}/web
+gosu root chmod g+s /var/www/${PROJECT_NAME}/web
 
 # Jail 'su' & 'gosu'
-gosu root chmod o-rwx /bin/su 2>/dev/null || :
-gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :
+#gosu root chmod o-rwx /bin/su 2>/dev/null || :
+#gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :
 
 exec "$@"

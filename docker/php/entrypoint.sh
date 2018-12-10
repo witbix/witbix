@@ -9,7 +9,6 @@ fi
 
 # Change UID of 'deploy' as per host user UID
 HOST_CURRENT_USER_ID=$(stat -c "%u" /var/www/${PROJECT_NAME}/.gitkeep)
-echo $HOST_CURRENT_USER_ID > /var/www/${PROJECT_NAME}/id.md
 if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
 gosu root usermod -u ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
@@ -26,7 +25,7 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
     echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     echo "MYSQL_PORT=${MYSQL_PORT}"
 }   > /var/www/${PROJECT_NAME}/.env
-
+echo $HOST_CURRENT_USER_ID > /var/www/${PROJECT_NAME}/id.md
 # Set github api key to allow composer to access private repo
 composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 

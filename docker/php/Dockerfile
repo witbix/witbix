@@ -35,8 +35,8 @@ RUN set -ex \
             acl \
     && addgroup -g 1000 deploy \
     && adduser -D -u 1000 -G deploy -s /bin/sh deploy \
-    && addgroup -g 2000 www-php \
-    && adduser -D -u 2000 -G www-php www-php \
+    && addgroup -g 4000 www-php \
+    && adduser -D -u 4000 -G www-php www-php \
     && addgroup -g 5000 www \
     && usermod -a -G www www-php \
     && chmod u+s /usr/sbin/php-fpm7 \

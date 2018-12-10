@@ -18,11 +18,6 @@ before_script:
 - "./scripts/prepare-env.sh"
 script:
 - "./scripts/drupal-build.sh"
-- id -u
-- ls -al code/drupal
-- docker exec -it test id -u
-- docker exec -it test stat -c "%u" /var/www/test/.gitkeep
-- docker exec -it test gosu root usermod -u 2000 deploy
 deploy:
 - provider: script
   script: "./scripts/deploy.sh"

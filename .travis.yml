@@ -21,7 +21,6 @@ script:
 - id -u
 - ls -al code/drupal
 - docker exec -it test id -u
-- docker exec -it test cat /var/www/test/id.md
 - docker exec -it test stat -c "%u" /var/www/test/.gitkeep
 deploy:
 - provider: script

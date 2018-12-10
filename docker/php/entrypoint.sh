@@ -30,10 +30,10 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
 gosu root chgrp www-php /var/www/${PROJECT_NAME}/*
-gosu root chmod g+s /var/www/${PROJECT_NAME}
+gosu root chmod g=rX,o= /var/www/${PROJECT_NAME}/*
 
 gosu root chgrp -R www /var/www/${PROJECT_NAME}/web
-gosu root chmod g+s /var/www/${PROJECT_NAME}/web
+gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
 
 # Jail 'su' & 'gosu'
 #gosu root chmod o-rwx /bin/su 2>/dev/null || :

@@ -47,7 +47,7 @@ RUN set -ex \
     && chmod +x /usr/local/bin/drupal \
     && mkdir /tmp/files \
     && chmod 777 /tmp/files \
-    && echo "umask u=rwx,go=" > /home/deploy/.profile
+    && echo "umask u=rwx,go=rX" > /home/deploy/.profile
 
 COPY php-ini.d /etc/php7/conf.d
 COPY php-fpm.d /etc/php7/php-fpm.d

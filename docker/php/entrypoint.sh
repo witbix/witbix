@@ -17,7 +17,7 @@ fi
 # Prepare Drupal
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
-{
+gosu root sh -c {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
     echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
     echo "MYSQL_USER=${MYSQL_USER}"
@@ -26,7 +26,7 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 }   > /var/www/${PROJECT_NAME}/.env
 
 # Set github api key to allow composer to access private repo
-composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+gosu root composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
 ## Set Appropriate ownership and permission
 #gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env

@@ -34,7 +34,7 @@ gosu root chgrp php-fpm /var/www/${PROJECT_NAME}/.env /var/www/${PROJECT_NAME}/l
 #gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env
 #gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/*
 
-gosu root chgrp -R www /var/www/${PROJECT_NAME}/web
+gosu root chgrp -R www-data /var/www/${PROJECT_NAME}/web
 gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
 
 # Jail 'su' & 'gosu'

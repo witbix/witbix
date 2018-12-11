@@ -27,7 +27,7 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
     echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     echo "MYSQL_PORT=${MYSQL_PORT}"
 }   > /var/www/${PROJECT_NAME}/.env
-gosu root chgrp www-php /var/www/${PROJECT_NAME}/.env /var/www/${PROJECT_NAME}/load.environment.php
+gosu root chgrp php-fpm /var/www/${PROJECT_NAME}/.env /var/www/${PROJECT_NAME}/load.environment.php
 
 
 ## Set Appropriate ownership and permission

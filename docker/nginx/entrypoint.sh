@@ -8,6 +8,6 @@ gosu root sh -c "envsubst \
           > /etc/nginx/conf.d/${DOMAIN_NAME}.conf" \
           2>/dev/null || :
 
-
+gosu root chmod o-rwx /bin/su 2>/dev/null || :
 gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :
 exec "$@"

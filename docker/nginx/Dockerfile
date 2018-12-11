@@ -12,7 +12,6 @@ RUN set -ex \
     && chmod u+s /usr/sbin/nginx \
     && echo "umask u=r,go=" > /var/cache/nginx/.profile
 
-
 COPY nginx.conf /etc/nginx
 COPY vhost-templates /vhost-templates
 COPY entrypoint.sh /

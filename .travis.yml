@@ -18,6 +18,7 @@ before_script:
 - "./scripts/prepare-env.sh"
 script:
 - "./scripts/drupal-build.sh"
+- ls -al
 - docker exec -it test ls -al
 deploy:
 - provider: script

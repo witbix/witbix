@@ -22,7 +22,7 @@ script:
 - docker exec -it test ls -al
 - docker exec -it test touch .env
 - docker exec -it test ls -al
-- docker exec -it composer install
+- docker exec -it test composer install
 deploy:
 - provider: script
   script: "./scripts/deploy.sh"

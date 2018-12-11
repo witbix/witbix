@@ -14,7 +14,7 @@ before_install:
 - tar xvf secrets.tar
 before_script:
 #- "./scripts/docker-build.sh docker witbix"
-#- "./scripts/traefik-setup.sh local"
+- "./scripts/traefik-setup.sh local"
 - "./scripts/prepare-env.sh"
 script:
 #- "./scripts/drupal-build.sh"

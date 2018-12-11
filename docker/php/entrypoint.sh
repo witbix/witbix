@@ -19,6 +19,7 @@ fi
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 ls -al /var/www/${PROJECT_NAME}
+touch test.env
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
     echo "MYSQL_DATABASE=${MYSQL_DATABASE}"

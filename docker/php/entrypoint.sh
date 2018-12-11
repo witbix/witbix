@@ -32,8 +32,8 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 #gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env
 #gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/*
 
-gosu root chgrp -R www-data /var/www/${PROJECT_NAME}/web
-gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
+#gosu root chgrp -R www-data /var/www/${PROJECT_NAME}/web
+#gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
 
 # Jail 'su' & 'gosu'
 gosu root chmod o-rwx /bin/su 2>/dev/null || :

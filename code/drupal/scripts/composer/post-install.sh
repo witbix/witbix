@@ -22,9 +22,8 @@ touch config/sync/.gitkeep \
 #echo "Setting permissions go=rX for web directory"
 #chmod -R go=rX web
 
-#chgrp www-php /var/www/debug-test/*
-#chgrp -R www-php .env load.environment.php vendor
-#chgrp www -R /var/www/debug-test/web
+chgrp -R www-data web
+chmod -R g=rX,o= web
 
 # Prepare the settings file for installation
 if [ ! -f web/sites/default/settings.php ]

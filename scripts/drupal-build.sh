@@ -2,7 +2,7 @@
 
 set -xe
 
-docker-compose up
+docker-compose up -d --build --remove-orphans --force-recreate
 docker exec -it test composer install
 docker exec -it test drush si --yes
 

@@ -17,8 +17,7 @@ before_script:
 - "./scripts/traefik-setup.sh local"
 - "./scripts/prepare-env.sh"
 script:
-- touch code/drupal/.env
-#- "./scripts/drupal-build.sh"
+- "./scripts/drupal-build.sh"
 deploy:
 - provider: script
   script: "./scripts/deploy.sh"

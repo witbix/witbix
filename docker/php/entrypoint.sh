@@ -14,19 +14,20 @@ if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
     gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 fi
 
+id deploy
 # Prepare Drupal
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
-{
-    echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
-    echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
-    echo "MYSQL_USER=${MYSQL_USER}"
-    echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
-    echo "MYSQL_PORT=${MYSQL_PORT}"
-}   > /var/www/${PROJECT_NAME}/.env
-
-# Set github api key to allow composer to access private repo
-gosu root composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+#{
+#    echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
+#    echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
+#    echo "MYSQL_USER=${MYSQL_USER}"
+#    echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+#    echo "MYSQL_PORT=${MYSQL_PORT}"
+#}   > /var/www/${PROJECT_NAME}/.env
+#
+## Set github api key to allow composer to access private repo
+#composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
 ## Set Appropriate ownership and permission
 #gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env

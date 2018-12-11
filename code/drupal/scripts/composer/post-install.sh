@@ -19,11 +19,8 @@ touch config/sync/.gitkeep \
     web/themes/.gitkeep
 
 # Set appropriate permissions for `web`
-#echo "Setting permissions go=rX for web directory"
-#chmod -R go=rX web
-
-chgrp -R www-data web
-chmod -R g=rX,o= web
+echo "Setting permissions go=rX for web directory"
+chmod -R go=rX web
 
 # Prepare the settings file for installation
 if [ ! -f web/sites/default/settings.php ]

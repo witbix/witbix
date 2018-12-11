@@ -17,7 +17,7 @@ fi
 # Prepare Drupal
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
-gosu root sh -c {
+{
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
     echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
     echo "MYSQL_USER=${MYSQL_USER}"

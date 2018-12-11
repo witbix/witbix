@@ -14,12 +14,10 @@ if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
     gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 fi
 
-
 # Prepare Drupal
+umask u=rwx,g=rx,o=
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
-ls -al /var/www/${PROJECT_NAME}
-touch test.env
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
     echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
@@ -28,14 +26,13 @@ touch test.env
     echo "MYSQL_PORT=${MYSQL_PORT}"
 }   > /var/www/${PROJECT_NAME}/.env
 
-## Set github api key to allow composer to access private repo
-#composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+# Set github api key to allow composer to access private repo
+composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
-## Set Appropriate ownership and permission
-#gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env
-#gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/*
-
-#gosu root chgrp -R www-data /var/www/${PROJECT_NAME}/web
+#gosu root chown deploy:www-php /var/www/${PROJECT_NAME}/*
+#gosu root chmod g=rX,o= /var/www/${PROJECT_NAME}/*
+#
+#gosu root chgrp -R www /var/www/${PROJECT_NAME}/web
 #gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
 
 # Jail 'su' & 'gosu'

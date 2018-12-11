@@ -26,7 +26,7 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 }   > /var/www/${PROJECT_NAME}/.env
 
 # Set github api key to allow composer to access private repo
-composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+#composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 
 ## Set Appropriate ownership and permission
 #gosu root chown -R deploy:php-fpm /var/www/${PROJECT_NAME}/vendor /var/www/${PROJECT_NAME}/load.environment.php /var/www/${PROJECT_NAME}/.env

@@ -18,10 +18,10 @@ before_script:
 - "./scripts/prepare-env.sh"
 script:
 #- "./scripts/drupal-build.sh"
-- docker-compose up -d --build --remove-orphans --force-recreate
-- docker exec -it test ls -al
-- docker exec -it test touch .env
-- docker exec -it test ls -al
+- docker-compose up --build --remove-orphans --force-recreate
+#- docker exec -it test ls -al
+#- docker exec -it test touch .env
+#- docker exec -it test ls -al
 #- docker exec -it composer install
 deploy:
 - provider: script

@@ -15,7 +15,7 @@ if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
 fi
 
 # Prepare Drupal
-umask u=rwx,g=rx,o=
+#umask u=rwx,g=rx,o=
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
 {

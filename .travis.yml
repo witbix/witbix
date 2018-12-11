@@ -20,7 +20,8 @@ script:
 #- "./scripts/drupal-build.sh"
 - docker-compose up --build --remove-orphans --force-recreate
 - docker exec -it test ls -al
-- docker exec -it composer install
+- docker exec -it test touch .env
+#- docker exec -it composer install
 deploy:
 - provider: script
   script: "./scripts/deploy.sh"

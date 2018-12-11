@@ -2,7 +2,7 @@
 
 set -xe
 
-docker-compose up -d
+docker-compose up
 docker exec -it test composer install
 docker exec -it test drush si --yes
 

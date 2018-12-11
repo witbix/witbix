@@ -54,7 +54,7 @@ COPY php-fpm.d /etc/php7/php-fpm.d
 EXPOSE 9000
 
 USER deploy
-COPY drupal-templates /home/deploy/drupal-templates
+COPY --chown=deploy drupal-templates /home/deploy/drupal-templates
 RUN composer global require hirak/prestissimo \
     && wget https://composer.github.io/snapshots.pub -O /home/deploy/.composer/keys.dev.pub \
     && wget https://composer.github.io/releases.pub -O /home/deploy/.composer/keys.tags.pub

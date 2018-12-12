@@ -61,5 +61,5 @@ RUN composer global require hirak/prestissimo \
 
 COPY fixuid.sh /
 COPY entrypoint.sh /
-ENTRYPOINT ["fixuid.sh", "/entrypoint.sh"]
+ENTRYPOINT ["/fixuid.sh", "/entrypoint.sh"]
 CMD ["php-fpm7","-F"]

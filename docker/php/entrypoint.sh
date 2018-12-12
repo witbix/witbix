@@ -8,7 +8,6 @@ if [ ${ENVIRONMENT} == 'dev' ]; then
 fi
 
 # Prepare Drupal
-#umask u=rwx,g=rx,o=
 cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"

@@ -18,16 +18,9 @@ before_script:
 - "./scripts/prepare-env.sh"
 script:
 - "./scripts/drupal-build.sh"
-#- docker-compose up --build --remove-orphans --force-recreate php
-#- docker exec -it test ls -al .env
-#- docker exec -it test whoami
-#- docker exec -it test id deploy
-#- docker exec -it test composer install -vvv
-#- docker exec -it test ls -al
-#- docker exec -it test composer install
-#deploy:
-#- provider: script
-#  script: "./scripts/deploy.sh"
-#  skip_cleanup: true
-#  on:
-#    branch: debug
+deploy:
+- provider: script
+  script: "./scripts/deploy.sh"
+  skip_cleanup: true
+  on:
+    branch: debug

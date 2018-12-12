@@ -26,6 +26,7 @@ composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 #gosu root chgrp -R www /var/www/${PROJECT_NAME}/web
 #gosu root chmod -R g=rX,o= /var/www/${PROJECT_NAME}/web
 
+
 # Jail 'su' & 'gosu'
 gosu root chmod o-rwx /bin/su 2>/dev/null || :
 gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :

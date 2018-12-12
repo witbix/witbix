@@ -19,12 +19,13 @@ touch config/sync/.gitkeep \
     web/themes/.gitkeep
 
 # Set appropriate permissions for `web`
-echo "Setting permissions go=rX for web directory"
-#chmod -R go=rX web
+echo "Setting appropriate permissions"
 chgrp -R www web
 chgrp -R php-fpm vendor load.environment.php .env
 chmod -R o= .
 chmod -R g=rX web vendor load.environment.php .env
+chmod o=X . web
+
 
 # Prepare the settings file for installation
 if [ ! -f web/sites/default/settings.php ]

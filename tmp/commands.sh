@@ -4,7 +4,7 @@ docker run -d --network=traefik-network -p 80:80 -p 8080:8080 -v /var/run/docker
 
 
 find . \! -name '.gitkeep' -exec rm -rv {} +
-docker-compose up -d --build --remove-orphans --force-recreate
+docker-compose up --build --remove-orphans --force-recreate -d
 docker exec -it witbix sh
 
 

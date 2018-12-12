@@ -39,6 +39,8 @@ RUN set -ex \
     && adduser -D -u 4000 -G php-fpm php-fpm \
     && addgroup -g 5000 www \
     && usermod -a -G www php-fpm \
+    && usermod -a -G www deploy \
+    && usermod -a -G php-fpm deploy \
     && chmod u+s /usr/sbin/php-fpm7 \
     && chmod u+s /usr/bin/gosu \
     && wget -O /usr/local/bin/drush https://github.com/drush-ops/drush-launcher/releases/download/0.6.0/drush.phar \
@@ -46,8 +48,8 @@ RUN set -ex \
     && wget -O /usr/local/bin/drupal https://drupalconsole.com/installer \
     && chmod +x /usr/local/bin/drupal \
     && mkdir /tmp/files \
-    && chmod 777 /tmp/files
-#    && echo "umask u=rwx,go=rX" > /home/deploy/.profile
+    && chmod 777 /tmp/files \
+    && echo "umask u=rwx,g=rX,o=" > /home/deploy/.profile
 
 COPY php-ini.d /etc/php7/conf.d
 COPY php-fpm.d /etc/php7/php-fpm.d

@@ -19,6 +19,8 @@ mkdir /var/www/${PROJECT_NAME}/web 2>/dev/null || :
     echo "MYSQL_PORT=${MYSQL_PORT}"
 }   > /var/www/${PROJECT_NAME}/.env
 
+echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}" > /var/www/${PROJECT_NAME}/.env.test
+
 # Set github api key to allow composer to access private repo
 composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 

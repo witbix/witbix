@@ -9,4 +9,4 @@ if [ ${HOST_CURRENT_USER_ID} -ne 0 ]; then
     gosu root groupmod -g ${HOST_CURRENT_USER_ID} deploy 2>/dev/null || :
 fi
 
-exec gosu deploy "$@"
+exec gosu deploy:deploy "$@"

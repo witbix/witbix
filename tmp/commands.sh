@@ -45,3 +45,6 @@ wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/usr/local
 wget https://composer.github.io/snapshots.pub -O /home/deploy/.composer/keys.dev.pub
 
 wget https://composer.github.io/releases.pub -O /home/deploy/.composer/keys.tags.pub
+
+#Know the uid/gid of a running process
+stat -c "%u %g" /proc/$pid/

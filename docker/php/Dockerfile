@@ -59,6 +59,7 @@ RUN composer global require hirak/prestissimo \
     && wget https://composer.github.io/snapshots.pub -O /home/deploy/.composer/keys.dev.pub \
     && wget https://composer.github.io/releases.pub -O /home/deploy/.composer/keys.tags.pub
 
+COPY fixuid.sh /
 COPY entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["fixuid.sh", "/entrypoint.sh"]
 CMD ["php-fpm7","-F"]

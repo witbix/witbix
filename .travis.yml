@@ -19,7 +19,7 @@ before_script:
 script:
 #- "./scripts/drupal-build.sh"
 - ls -al code/drupal
-- docker-compose up -d --build --remove-orphans --force-recreate
+- docker-compose up -d --build --remove-orphans --force-recreate php
 - docker exec -it test ls -al
 - docker exec -it test composer install -vvv
 #- docker exec -it test ls -al

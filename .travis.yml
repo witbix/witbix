@@ -17,10 +17,10 @@ before_script:
 - "./scripts/traefik-setup.sh local"
 - "./scripts/prepare-env.sh"
 script:
-#- "./scripts/drupal-build.sh"
-- ls -al code/drupal
-- docker-compose up -d --build --remove-orphans --force-recreate
-- docker exec -it test ls -al
+- "./scripts/drupal-build.sh"
+#- ls -al code/drupal
+#- docker-compose up -d --build --remove-orphans --force-recreate
+#- docker exec -it test ls -al
 #- docker exec -it test touch .env
 #- docker exec -it test ls -al
 #- docker exec -it test composer install

@@ -16,7 +16,7 @@ rsync --info=progress2 \
       -e "ssh -T -c aes128-ctr -o Compression=no -o StrictHostKeyChecking=no -x" . "${1}"@"${2}":"${3}"
 
 # Run required scripts on server machine over ssh
-ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/test && scripts/test.sh"
-ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/test && scripts/foo.sh"
+ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/test.sh"
+ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/foo.sh"
 
 

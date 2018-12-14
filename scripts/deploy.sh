@@ -14,8 +14,8 @@ rsync --info=progress2 \
       --compress \
       --group \
       --exclude-from="./scripts/.rsyncignore" \
-      -e "ssh -T -c aes128-ctr -o Compression=no -o StrictHostKeyChecking=no -x" . "${1}"@"${2}":"${3}"
+      -e "ssh -T -c aes128-ctr -o Compression=no -x" . "${1}"@"${2}":"${3}"
 
 # Run required scripts on server machine over ssh
-ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/test.sh"
-ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/foo.sh"
+ssh travis@witbix.com "cd ~/witbix-debug && scripts/test.sh"
+ssh travis@witbix.com "cd ~/witbix-debug && scripts/foo.sh"

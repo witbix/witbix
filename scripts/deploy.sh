@@ -12,7 +12,7 @@ rsync --info=progress2 \
       --archive  \
       --compress \
       --group \
-      --exclude-from="./scripts/.rsyncignore"
+      --exclude-from="./scripts/.rsyncignore" \
       -e "ssh -T -c aes128-ctr -o Compression=no -o StrictHostKeyChecking=no -x" . "${1}"@"${2}":"${3}"
 
 # Run required scripts on server machine over ssh

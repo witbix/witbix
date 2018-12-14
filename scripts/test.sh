@@ -4,5 +4,5 @@ set -xe
 
 mkdir test-1
 mkdir test-2
-exit 1
+mkdir /root/test
 mkdir test-3

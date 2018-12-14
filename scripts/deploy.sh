@@ -18,5 +18,3 @@ rsync --info=progress2 \
 # Run required scripts on server machine over ssh
 ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/test.sh"
 ssh -o StrictHostKeyChecking=no travis@witbix.com "cd ~/witbix-debug && scripts/foo.sh"
-
-

@@ -4,8 +4,9 @@ services:
 env:
   global:
   - DEPLOY_USER=travis
-  - SERVER_IP=206.189.130.193
-  - PRO_DOMAIN=witbix.com
+  - DEPLOY_SERVER=206.189.130.193
+  - DEPLOY_PATH=/home/travis
+  - PROD_DOMAIN=witbix.com
   - DEV_DOMAIN=dev.witbix.com
   - secure: DxvZCScq24XD9TwuRruNlfC9sfAxF9O0hgXmjrPBkTszBesOzFjD/6fG+JCNxTJKEmPlZSjhLjX21AkN17EK4cO5Hl34A07b0FDURpggDOcNctKWEq+ZafdUGDOVo+HyhbvmdgkMfaQ6jqsC3Bq73W/BsTIEKGX14eU6VUl4vC4L7y1KWHNGc/vbrqUmlZEeJ8ek+m8opYbovstp2h4RTwQw1Ezv8LVliu4xlMSkhcqx+bDvnmir/mqFJdwA4gmulGxGZwuiEI/cwKWhwjMTcJ0t6kiJa6DrLs5sZdlD2STRbx6TQuliRmb0l6rWNffHexvc3IunFgK6Vh/Th5Pua43lVWVVjGLNPvfEcp4X9dpSPkOf5RbHbxvB0AGaVk10LwbghDE7aNfsNovdbE9Xk90nUq97CJGp4IGXQSS52ZUKhMdX0oK2EOcgX6G3eZxJ8vIck237nbHPm6JEwkUJYx0BAKEQL/kmCeS783BTf/tCbjTjzsxmnfEuy+Ko9RLssRF4S57kH/3us5XsCFs7AHDbWtGNDuw62Q7Z4/IKGjooLXMvprNleuxGLfP5T+CJb8P/K97tGSoDPrWPsUm3IB2+9qN7A1vtFcyxNt1k6cpI5t7kx3CCW+nvgswj31mpab1WdtPFLJzmygwfCLkZKyhP202/WCgfV13fFGHOM1I=
 before_install:
@@ -13,14 +14,14 @@ before_install:
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 before_script:
-#- "./scripts/docker-build.sh docker witbix"
+- "./scripts/docker-build.sh docker witbix"
 - "./scripts/traefik-setup.sh local"
 - "./scripts/prepare-env.sh"
 script:
 - "./scripts/drupal-build.sh"
 deploy:
 - provider: script
-  script: "./scripts/deploy.sh"
+  script: "./scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH}"
   skip_cleanup: true
   on:
     branch: debug

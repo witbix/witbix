@@ -1,0 +1,7 @@
+docker
+.git*
+secrets.tar
+secrets.tar.enc
+secrets/ssh
+code/drupal/web/sites/*/settings.php
+code/drupal/web/sites/*/services.yml

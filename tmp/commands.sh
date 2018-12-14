@@ -48,3 +48,32 @@ wget https://composer.github.io/releases.pub -O /home/deploy/.composer/keys.tags
 
 #Know the uid/gid of a running process
 stat -c "%u %g" /proc/$pid/
+
+@todo
+envsubst "`printf '${%s} ' $(sh -c "env|cut -d'=' -f1")`" < in.txt > out.txt
+
+
+#cp .env.example .env
+
+#sed -E 's/^(PROJECT_NAME=).*/\1something/' .env > .pela
+#
+#
+#sed -E 's/^(PROJECT_NAME=).*/\1'"$PROJECT_NAME"'/' .env > .pela
+
+#env | awk -F = '{printf \" $$%s\", $$1}'
+#
+#envsubst "`printf '${%s} ' $(sh -c "env|cut -d'=' -f1")`" < in.txt > out.txt
+#
+#printf '%s ' $(sh -c "env|cut -d'=' -f1")
+
+
+#for item in $(sh -c "env|cut -d'=' -f1") ;
+#  do
+#    echo $item
+#    sed -E 's/^('"$item"'=).*/\'"${item}"'/' .env > .pela
+#  done
+
+
+
+echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+sudo chmod 400 ~/.ssh/config

@@ -6,6 +6,7 @@ set -xe
 chmod 600 secrets/ssh/${1}_rsa
 eval $(ssh-agent)
 ssh-add secrets/ssh/${1}_rsa
+ssh-keyscan  ${DEPLOY_SERVER} >> ~/.ssh/known_hosts
 
 # Start uploading artifacts to server using rsync
 rsync --info=progress2 \

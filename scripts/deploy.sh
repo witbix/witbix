@@ -6,7 +6,10 @@ set -xe
 chmod 600 secrets/ssh/${1}_rsa
 eval $(ssh-agent)
 ssh-add secrets/ssh/${1}_rsa
-ssh-keyscan  ${DEPLOY_SERVER} >> ~/.ssh/known_hosts
+ssh-keyscan ${2} >> ~/.ssh/known_hosts
+
+# Modify some variables specific to production server in .env file before uploading it
+scripts/prepare-env.sh
 
 # Start uploading artifacts to server using rsync
 rsync --info=progress2 \

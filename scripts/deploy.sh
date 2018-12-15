@@ -17,5 +17,4 @@ rsync --info=progress2 \
       -e "ssh -T -c aes128-ctr -o Compression=no -x" . "${1}"@"${2}":"${3}"
 
 # Run required scripts on server machine over ssh
-ssh travis@witbix.com "cd ~/witbix-debug && scripts/test.sh"
-ssh travis@witbix.com "cd ~/witbix-debug && scripts/foo.sh"
+ssh "${1}"@"${2}" "cd ${3} && scripts/traefik-setup.sh remote && /scripts/drupal-build.sh"

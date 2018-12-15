@@ -14,14 +14,16 @@ before_install:
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 before_script:
-- "./scripts/docker-build.sh docker witbix"
-- "./scripts/traefik-setup.sh local"
-- "./scripts/prepare-env.sh"
+- scripts/docker-build.sh docker witbix
+- scripts/traefik-setup.sh local
+- scripts/prepare-env.sh
 script:
-- "./scripts/drupal-build.sh"
+- scripts/drupal-build.sh
 deploy:
 - provider: script
-  script: "PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} DOMAIN_NAME=$PROD_DOMAIN ./scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH}"
+  script: PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} \
+          DOMAIN_NAME=$PROD_DOMAIN \
+          ./scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH}
   skip_cleanup: true
   on:
     branch: debug

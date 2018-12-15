@@ -9,7 +9,7 @@ ssh-add secrets/ssh/${1}_rsa
 ssh-keyscan ${2} >> ~/.ssh/known_hosts
 
 # Modify some variables specific to production server in .env file before uploading it
-exec scripts/prepare-env.sh
+scripts/prepare-env.sh
 
 # Start uploading artifacts to server using rsync
 rsync --info=progress2 \

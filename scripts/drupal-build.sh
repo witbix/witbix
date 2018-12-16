@@ -2,12 +2,12 @@
 
 set -xe
 
-docker-compose up -d --build --remove-orphans --force-recreate
-docker exec -it test composer install
-docker exec -it test drush si --yes
+PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+docker exec -i ${PROJECT_NAME} composer install
+docker exec -i ${PROJECT_NAME} drush si --yes
 
-if [ $(docker exec witbix-debug drush status bootstrap | grep -c Successful) == 1 ]; then
-   echo  Drupal has been sucessfully built and tested.
+if [ $(docker exec ${PROJECT_NAME} drush status bootstrap | grep -c Successful) == 1 ]; then
+   echo  Drupal has been sucessfully built up
 else
    echo Drupal build failed
 fi

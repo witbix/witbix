@@ -16,7 +16,7 @@ before_install:
 before_script:
 - scripts/docker-build.sh docker witbix
 - scripts/traefik-setup.sh local
-- scripts/prepare-env.sh
+- scripts/project-up.sh
 script:
 - scripts/drupal-build.sh
 deploy:

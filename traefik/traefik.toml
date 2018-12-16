@@ -27,7 +27,7 @@ entryPoint = "https"
 # acmeLogging=true
 
 # Use this server for developmnt purpose as it can generate unlimited but less secure ssl certificates for testing only.
-caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+#caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
 # It creates certificates for all Host rules. If false then you have to declare/uncomment `acme.domain` explicitly.
 onHostRule = true

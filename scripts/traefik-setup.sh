@@ -20,7 +20,8 @@ if [ $(docker ps | grep -c traefik) == 0 ]; then
         --name=traefik traefik:latest --api --docker
     fi
     if [ $1 == 'remote' ]; then
-        docker run -d --network=traefik-network -p 80:80 -p 443:443 \
+        chmod 600 traefik/acme.json
+        docker run --network=traefik-network -p 80:80 -p 443:443 \
         -v /var/run/docker.sock:/var/run/docker.sock \
         -v $PWD/traefik:/etc/traefik \
         -v $PWD/secrets/ssl:/etc/ssl \

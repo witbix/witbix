@@ -24,4 +24,5 @@ deploy:
   script: PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} MYSQL_HOSTNAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}.mariadb DOMAIN_NAME=$PROD_DOMAIN  scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH}
   skip_cleanup: true
   on:
-    branch: debug
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^stage-test|master-test$

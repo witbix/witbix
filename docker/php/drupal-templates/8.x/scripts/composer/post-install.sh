@@ -18,14 +18,6 @@ touch config/sync/.gitkeep \
     web/profiles/.gitkeep \
     web/themes/.gitkeep
 
-# Set appropriate permissions for `web`
-echo "Setting appropriate permissions"
-chgrp -R www web
-chgrp -R php-fpm vendor load.environment.php .env
-chmod -R o= .
-chmod -R g=rX web vendor load.environment.php .env
-chmod o=X . web
-
 
 # Prepare the settings file for installation
 if [ ! -f web/sites/default/settings.php ]
@@ -68,3 +60,11 @@ if [ ! -d web/sites/default/files ]
     ln -s /tmp/files/ web/sites/default/
     echo "Create a symbolic link from sites/default/files to /tmp/files"
 fi
+
+# Set appropriate permissions for `web`
+echo "Setting appropriate permissions"
+chgrp -R www web
+chgrp -R php-fpm vendor load.environment.php .env
+chmod -R o= .
+chmod -R g=rX web vendor load.environment.php .env
+chmod o=X . web

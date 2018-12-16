@@ -21,10 +21,18 @@ if [ $(docker ps | grep -c traefik) == 0 ]; then
     fi
     if [ $1 == 'remote' ]; then
         chmod 600 traefik/acme.json
-        docker run --network=traefik-network -p 80:80 -p 443:443 \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v $PWD/traefik:/etc/traefik \
-        -v $PWD/secrets/ssl:/etc/ssl \
-        --name=traefik traefik:latest --api --docker
+
+        if [ -f ./secrets/ssl/*.key ] && [ -f ./secrets/ssl/*.crt ]; then
+            docker run -d --network=traefik-network -p 80:80 -p 443:443 \
+            -v /var/run/docker.sock:/var/run/docker.sock  \
+            -v $PWD/traefik:/etc/traefik \
+            -v $PWD/secrets/ssl:/etc/ssl \
+            --name=traefik traefik:latest --api --docker
+          else
+            docker run -d --network=traefik-network -p 80:80 -p 443:443 \
+            -v /var/run/docker.sock:/var/run/docker.sock  \
+            -v $PWD/traefik:/etc/traefik \
+            --name=traefik traefik:latest --api --docker
+        fi
     fi
 fi

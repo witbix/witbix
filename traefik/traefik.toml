@@ -21,13 +21,13 @@ keyFile = "/etc/ssl/ca.key"
 # Uncomment below snippets if you want to use let's encrypt free ssl certificates (You can use both purchased and
 # let's encrypt also). If both enabled then first it checks if any purchased ssl exits and then create ssl for rest domains.
 [acme]
-email = "email@example.com"        #any email id will work
+email = "dibya.dev94@gmail.com"
 storage="/etc/traefik/acme.json"
 entryPoint = "https"
 # acmeLogging=true
 
 # Use this server for developmnt purpose as it can generate unlimited but less secure ssl certificates for testing only.
-#caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 
 # It creates certificates for all Host rules. If false then you have to declare/uncomment `acme.domain` explicitly.
 onHostRule = true

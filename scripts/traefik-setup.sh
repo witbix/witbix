@@ -17,7 +17,7 @@ if [ $(docker ps | grep -c traefik) == 0 ]; then
     if [ $1 == 'local' ]; then
         docker run -d --network=traefik-network -p 80:80 \
         -v /var/run/docker.sock:/var/run/docker.sock \
-        --name=traefik traefik:latest --api --docker
+        --name=traefik traefik:v1.7-alpine --api --docker
     fi
     if [ $1 == 'remote' ]; then
         chmod 600 traefik/acme.json
@@ -27,12 +27,12 @@ if [ $(docker ps | grep -c traefik) == 0 ]; then
             -v /var/run/docker.sock:/var/run/docker.sock  \
             -v $PWD/traefik:/etc/traefik \
             -v $PWD/secrets/ssl:/etc/ssl \
-            --name=traefik traefik:latest --api --docker
+            --name=traefik traefik:v1.7-alpine --api --docker
           else
             docker run -d --network=traefik-network -p 80:80 -p 443:443 \
             -v /var/run/docker.sock:/var/run/docker.sock  \
             -v $PWD/traefik:/etc/traefik \
-            --name=traefik traefik:latest --api --docker
+            --name=traefik traefik:v1.7-alpine --api --docker
         fi
     fi
 fi

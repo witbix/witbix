@@ -16,8 +16,6 @@ ssh-keyscan ${DEPLOY_SERVER} >> ~/.ssh/known_hosts
 # Ensure you have latest .env file before uploading.
 #perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
 
-# Copy only necessary secrets
-cp secrets/traefik
 
 # Start uploading artifacts to server using rsync
 rsync --info=progress2 \

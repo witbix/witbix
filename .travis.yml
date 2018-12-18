@@ -17,7 +17,7 @@ script:
 - scripts/drupal-build.sh 'dev'
 deploy:
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'stage'
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'witbix' 'stage'
   skip_cleanup: true
   on:
     branch: stage

@@ -29,6 +29,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
 
 
 
+
             perl -i -lpe 's/^(PROJECT_NAME=).*/\1'"$PROJECT_NAME"-stage-"$RANDOM"'/' .env
             perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'stage."$DOMAIN_NAME"'/' .env
             STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
@@ -37,6 +38,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
             docker exec -i ${STAGE_PROJECT_NAME} drush si --yes
             docker exec -i ${STAGE_PROJECT_NAME} drush cim --partial
             docker exec -i ${STAGE_PROJECT_NAME} drush -y csim live_config
+
 fi
 
 if [ ${BUILD_ENV} == 'prod' ]; then

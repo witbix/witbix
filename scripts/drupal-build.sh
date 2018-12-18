@@ -5,7 +5,7 @@ set -xe
 BUILD_ENV=${1}
 
 if [ ! -f .env ]; then
-    cp secrets/.env.remote > .env
+    cp secrets/.env.remote .env
 fi
 
 PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)

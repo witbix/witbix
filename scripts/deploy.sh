@@ -25,7 +25,7 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
         --include="secrets/traefik" \
         --exclude-from="./scripts/.rsyncexclude" \
         -e "ssh -T -c aes128-ctr -o Compression=no -x" \
-        ./  "${DEPLOY_USER}"@"${DEPLOY_SERVER}":"${DEPLOY_PATH}/${PROJECT_NAME}-stage"
+        ./  "${DEPLOY_USER}"@"${DEPLOY_SERVER}":"${DEPLOY_PATH}"/"${PROJECT_NAME}"-stage
 
     # Run required scripts on server machine over ssh
     ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_PATH}/${PROJECT_NAME}-stage \

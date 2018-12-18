@@ -7,7 +7,7 @@ BUILD_ENV=${1}
 
 if [ ${BUILD_ENV} == 'dev' ]; then
     if [ ! -f .env ]; then
-        perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.example > .env
+        perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.local > .env
     fi
     PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     docker-compose up -d

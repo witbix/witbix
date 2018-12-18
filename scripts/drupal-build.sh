@@ -5,8 +5,7 @@ set -xe
 BUILD_ENV=${1}
 
 
-if [ ${BUILD_ENV} == 'dev' ]; then
-
+if [ ${BUILD_ENV} == 'testing' ]; then
     PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     docker-compose up -d
     docker exec -i ${PROJECT_NAME} composer install
@@ -15,7 +14,7 @@ if [ ${BUILD_ENV} == 'dev' ]; then
 fi
 
 
-if [ ${BUILD_ENV} == 'stage' ]; then
+if [ ${BUILD_ENV} == 'staging' ]; then
 
     STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     MASTER_PROJECT_NAME=${PROJECT_NAME//stage/master}
@@ -37,7 +36,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
     fi
 fi
 
-if [ ${BUILD_ENV} == 'prod' ]; then
+if [ ${BUILD_ENV} == 'production' ]; then
 
     MASTER_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     STAGE_PROJECT_NAME=${PROJECT_NAME//master/stage}

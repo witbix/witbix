@@ -15,15 +15,15 @@ before_script:
 - scripts/docker-build.sh 'docker' 'witbix'
 - scripts/traefik-setup.sh 'local'
 script:
-- scripts/drupal-build.sh 'dev'
+- scripts/drupal-build.sh 'testing'
 deploy:
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} stage
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} staging
   skip_cleanup: true
   on:
     branch: stage
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} prod
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} production
   skip_cleanup: true
   on:
     branch: prod

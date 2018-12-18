@@ -13,9 +13,6 @@ DOMAIN_NAME=$(cat .env | grep DOMAIN_NAME | cut -d '=' -f 2-)
 
 
 if [ ${BUILD_ENV} == 'dev' ]; then
-
-    perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'"$PROJECT_NAME".localhost'/' .env
-
     docker-compose up -d
     docker exec -i ${PROJECT_NAME} composer install
     docker exec -i ${PROJECT_NAME} drush si --yes
@@ -30,8 +27,10 @@ if [ ${BUILD_ENV} == 'stage' ]; then
 
 
 
-            perl -i -lpe 's/^(PROJECT_NAME=).*/\1'"$PROJECT_NAME"-stage-"$RANDOM"'/' .env
+            perl -i -lpe 's/^(PROJECT_NAME=).*/\1'"$PROJECT_NAME"-stage'/' .env
             perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'stage."$DOMAIN_NAME"'/' .env
+            perl -i -lpe 's/^(MYSQL_HOSTNAME=).*/\1'"$PROJECT_NAME"-stage.mariadb'/' .env
+
             STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
             docker-compose up -d
             docker exec -i ${STAGE_PROJECT_NAME} composer install

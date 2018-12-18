@@ -22,7 +22,7 @@ deploy:
   on:
     branch: stage
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'prod'
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'witbix' 'prod'
   skip_cleanup: true
   on:
     branch: prod

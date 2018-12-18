@@ -14,7 +14,7 @@ before_script:
 - scripts/docker-build.sh 'docker' 'witbix'
 - scripts/traefik-setup.sh 'local'
 script:
-- scripts/drupal-build.sh ${TRAVIS_BRANCH}
+- $TRAVIS_BRANCH =~ ^dev|stage$ ? scripts/drupal-build.sh ${TRAVIS_BRANCH} : echo "skiping test for prod branch"
 deploy:
 - provider: script
   script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} ${TRAVIS_REPO_SLUG#*/} ${TRAVIS_BRANCH}

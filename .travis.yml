@@ -5,7 +5,7 @@ env:
   global:
   - DEPLOY_USER=travis
   - DEPLOY_SERVER=206.189.130.193
-  - DEPLOY_PATH=/home/travis
+  - DEPLOY_PATH=/home/travis/witbix
 before_install:
 - openssl aes-256-cbc -K $encrypted_d3c148061e7a_key -iv $encrypted_d3c148061e7a_iv
   -in secrets.tar.enc -out secrets.tar -d
@@ -14,15 +14,11 @@ before_script:
 - scripts/docker-build.sh 'docker' 'witbix'
 - scripts/traefik-setup.sh 'local'
 script:
-- scripts/drupal-build.sh 'dev'
+- scripts/drupal-build.sh ${TRAVIS_BRANCH}
 deploy:
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'witbix' 'stage'
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} ${TRAVIS_REPO_SLUG#*/} ${TRAVIS_BRANCH}
   skip_cleanup: true
   on:
-    branch: stage
-- provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} 'witbix' 'prod'
-  skip_cleanup: true
-  on:
-    branch: prod
+    all_branches: true
+    condition: $TRAVIS_BRANCH =~ ^stage|prod$

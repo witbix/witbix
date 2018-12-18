@@ -38,5 +38,7 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
 
     # Run required scripts on server machine over ssh
     ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_PATH} \
+                                         && mv ${PROJECT_NAME}-stage ${PROJECT_NAME}-prod-${RANDOM} \
+                                         && cd ${PROJECT_NAME}-prod-* \
                                          && scripts/drupal-build.sh prod"
 fi

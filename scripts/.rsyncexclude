@@ -1,5 +1,6 @@
 .dpl
 .git*
+.env
 secrets.tar
 secrets.tar.enc
 secrets/ssh

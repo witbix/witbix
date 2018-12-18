@@ -5,23 +5,24 @@ env:
   global:
   - DEPLOY_USER=travis
   - DEPLOY_SERVER=206.189.130.193
-  - DEPLOY_PATH=/home/travis/${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}
-  - DOMAIN_NAME=witbix.com
-  - secure: DxvZCScq24XD9TwuRruNlfC9sfAxF9O0hgXmjrPBkTszBesOzFjD/6fG+JCNxTJKEmPlZSjhLjX21AkN17EK4cO5Hl34A07b0FDURpggDOcNctKWEq+ZafdUGDOVo+HyhbvmdgkMfaQ6jqsC3Bq73W/BsTIEKGX14eU6VUl4vC4L7y1KWHNGc/vbrqUmlZEeJ8ek+m8opYbovstp2h4RTwQw1Ezv8LVliu4xlMSkhcqx+bDvnmir/mqFJdwA4gmulGxGZwuiEI/cwKWhwjMTcJ0t6kiJa6DrLs5sZdlD2STRbx6TQuliRmb0l6rWNffHexvc3IunFgK6Vh/Th5Pua43lVWVVjGLNPvfEcp4X9dpSPkOf5RbHbxvB0AGaVk10LwbghDE7aNfsNovdbE9Xk90nUq97CJGp4IGXQSS52ZUKhMdX0oK2EOcgX6G3eZxJ8vIck237nbHPm6JEwkUJYx0BAKEQL/kmCeS783BTf/tCbjTjzsxmnfEuy+Ko9RLssRF4S57kH/3us5XsCFs7AHDbWtGNDuw62Q7Z4/IKGjooLXMvprNleuxGLfP5T+CJb8P/K97tGSoDPrWPsUm3IB2+9qN7A1vtFcyxNt1k6cpI5t7kx3CCW+nvgswj31mpab1WdtPFLJzmygwfCLkZKyhP202/WCgfV13fFGHOM1I=
+  - DEPLOY_PATH=/home/travis
 before_install:
 - openssl aes-256-cbc -K $encrypted_d3c148061e7a_key -iv $encrypted_d3c148061e7a_iv
   -in secrets.tar.enc -out secrets.tar -d
-- tar xvf secrets.tar
+- tar xvf remote.tar
 before_script:
 - scripts/docker-build.sh docker witbix
 - scripts/traefik-setup.sh local
-- scripts/project-up.sh
 script:
-- scripts/drupal-build.sh
+- scripts/drupal-build.sh dev
 deploy:
 - provider: script
-  script: PROJECT_NAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH} MYSQL_HOSTNAME=${TRAVIS_REPO_SLUG#*/}-${TRAVIS_BRANCH}.mariadb DOMAIN_NAME=${TRAVIS_BRANCH}.${DOMAIN_NAME} scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH}
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} stage
   skip_cleanup: true
   on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^stage-test|master-test$
+    branch: stage-test
+- provider: script
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} master
+  skip_cleanup: true
+  on:
+    branch: prod-test

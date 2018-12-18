@@ -3,6 +3,7 @@
 secrets.tar
 secrets.tar.enc
 secrets/ssh
+secrets/.env.remote
 code/drupal/web/sites/*/settings.php
 code/drupal/web/sites/*/services.yml
 code/drupal/.env

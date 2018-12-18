@@ -10,6 +10,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_d3c148061e7a_key -iv $encrypted_d3c148061e7a_iv
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
+- cp secrets/.env.remote .env
 before_script:
 - scripts/docker-build.sh 'docker' 'witbix'
 - scripts/traefik-setup.sh 'local'

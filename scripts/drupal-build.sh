@@ -42,6 +42,8 @@ if [ ${BUILD_ENV} == 'prod' ]; then
     perl -i -lpe 's/^(PROJECT_NAME=).*/\1'"$MASTER_PROJECT_NAME"'/' .env
     perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'"$DOMAIN_NAME"'/' .env
     perl -i -lpe 's/^(MYSQL_HOSTNAME=).*/\1'"$MASTER_PROJECT_NAME"'/' .env
+    docker-compose up -d
+
 
 fi
 

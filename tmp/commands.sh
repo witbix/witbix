@@ -80,3 +80,7 @@
 
 PROJECT_NAME=witbix-dev-test
 echo ${PROJECT_NAME//dev/master}
+
+perl -i -lpe 's/^(PROJECT_NAME=).*/\1something/' .env
+perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
+perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env

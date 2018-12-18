@@ -4,9 +4,18 @@ set -xe
 
 BUILD_ENV=${1}
 
+if [ ! -f .env ]; then
+    cp secrets/.env.remote > .env
+fi
 
-if [ ${BUILD_ENV} == 'testing' ]; then
-    PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+DOMAIN_NAME=$(cat .env | grep DOMAIN_NAME | cut -d '=' -f 2-)
+
+
+if [ ${BUILD_ENV} == 'dev' ]; then
+
+    perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'"$PROJECT_NAME".localhost'/' .env
+
     docker-compose up -d
     docker exec -i ${PROJECT_NAME} composer install
     docker exec -i ${PROJECT_NAME} drush si --yes
@@ -14,29 +23,23 @@ if [ ${BUILD_ENV} == 'testing' ]; then
 fi
 
 
-if [ ${BUILD_ENV} == 'staging' ]; then
+if [ ${BUILD_ENV} == 'stage' ]; then
 
-    STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
-    MASTER_PROJECT_NAME=${PROJECT_NAME//stage/master}
 
-    if [ $(docker exec ${MASTER_PROJECT_NAME} drush status bootstrap 2> /dev/null | grep -c Successful) == 1 ]; then
-            docker exec -i ${MASTER_PROJECT_NAME} drush sql-dump --result-file=../dump.sql
-            mv ../${MASTER_PROJECT_NAME}/code/drupal/dump.sql ./code/drupal
-            docker-compose up -d
-            docker exec -i ${STAGE_PROJECT_NAME} composer install
-            docker exec -i ${STAGE_PROJECT_NAME} drush si --yes
-            docker exec -i ${STAGE_PROJECT_NAME} drush sql-cli < ./code/drupal/dump.sql
-            docker exec -i ${STAGE_PROJECT_NAME} drush -y cim
-     else
+
+
+
+            perl -i -lpe 's/^(PROJECT_NAME=).*/\1'"$PROJECT_NAME"-stage-"$RANDOM"'/' .env
+            perl -i -lpe 's/^(DOMAIN_NAME=).*/\1'stage."$DOMAIN_NAME"'/' .env
+            STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
             docker-compose up -d
             docker exec -i ${STAGE_PROJECT_NAME} composer install
             docker exec -i ${STAGE_PROJECT_NAME} drush si --yes
             docker exec -i ${STAGE_PROJECT_NAME} drush cim --partial
             docker exec -i ${STAGE_PROJECT_NAME} drush -y csim live_config
-    fi
 fi
 
-if [ ${BUILD_ENV} == 'production' ]; then
+if [ ${BUILD_ENV} == 'prod' ]; then
 
     MASTER_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     STAGE_PROJECT_NAME=${PROJECT_NAME//master/stage}

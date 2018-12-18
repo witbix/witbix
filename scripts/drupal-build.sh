@@ -4,14 +4,18 @@ set -xe
 
 BUILD_ENV=${1}
 
+
 if [ ${BUILD_ENV} == 'dev' ]; then
-    perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.example > .env
-    docker-compose up -d
+    if [ ! -f .env ]; then
+        perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.example > .env
+    fi
     PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+    docker-compose up -d
     docker exec -i ${PROJECT_NAME} composer install
     docker exec -i ${PROJECT_NAME} drush si --yes
     docker exec -i ${PROJECT_NAME} drush cim --partial --yes
 fi
+
 
 if [ ${BUILD_ENV} == 'stage' ]; then
 
@@ -35,7 +39,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
     fi
 fi
 
-if [ ${BUILD_ENV} == 'master' ]; then
+if [ ${BUILD_ENV} == 'prod' ]; then
 
     MASTER_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     STAGE_PROJECT_NAME=${PROJECT_NAME//master/stage}

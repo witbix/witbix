@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.4"
 
 services:
 
@@ -10,7 +10,7 @@ services:
     working_dir: /var/www/${PROJECT_NAME}
     volumes:
       - ./code/drupal:/var/www/${PROJECT_NAME}:cached
-      - staticfiles:/tmp/files
+      - files:/tmp/files
     environment:
       - ENVIRONMENT
       - PROJECT_NAME
@@ -32,7 +32,7 @@ services:
     working_dir: /var/www/${PROJECT_NAME}/web
     volumes:
       - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:cached
-      - staticfiles:/tmp/files
+      - files:/tmp/files
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
     environment:
@@ -62,8 +62,10 @@ services:
 volumes:
   database:
     driver: local
-  staticfiles:
+    name: ${PROJECT_NAME}-database
+  files:
     driver: local
+    name: ${PROJECT_NAME}-files
 
 networks:
   drupal:

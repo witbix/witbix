@@ -39,15 +39,14 @@ fi
 
 if [ ${BUILD_ENV} == 'prod' ]; then
 
-    EXISTING_STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+    OLD_STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
 
     PROJECT_NAME=${PWD##*/} \
     MYSQL_HOSTNAME=${PROJECT_NAME}.mariadb \
     DOMAIN_NAME=$(cat secrets/.env.remote | grep DOMAIN_NAME | cut -d '=' -f 2-) \
     perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
 
-    NEW_PROD_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
-    docker-compose -p STAGE_PROJECT_NAME up -d
+    docker-compose -p ${OLD_STAGE_PROJECT_NAME} up -d
 
 fi
 

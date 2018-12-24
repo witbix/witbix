@@ -4,8 +4,8 @@ services:
 env:
   global:
   - DEPLOY_USER=travis
-  - DEPLOY_SERVER=206.189.130.193
-  - DEPLOY_PATH=/home/travis
+  - DEPLOY_SERVER=35.200.141.209
+  - DEPLOY_PATH=/home/travis/witbix
 before_install:
 - openssl aes-256-cbc -K $encrypted_d3c148061e7a_key -iv $encrypted_d3c148061e7a_iv
   -in secrets.tar.enc -out secrets.tar -d

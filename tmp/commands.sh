@@ -78,13 +78,13 @@
 #echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 #sudo chmod 400 ~/.ssh/config
 
-PROJECT_NAME=witbix-dev-test
-echo ${PROJECT_NAME//dev/master}
+PROJECT_NAME=witbix-yang
+echo ${PROJECT_NAME//ying|yang/yang|ying}
 
-perl -i -lpe 's/^(PROJECT_NAME=).*/\1something/' .env
-perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
-perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env
-
+#perl -i -lpe 's/^(PROJECT_NAME=).*/\1something/' .env
+#perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
+#perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env
+#
 
 
 #chmod 600 secrets/ssh/${DEPLOY_USER}_rsa

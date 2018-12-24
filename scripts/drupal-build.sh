@@ -40,8 +40,7 @@ fi
 if [ ${BUILD_ENV} == 'prod' ]; then
 
     DOMAIN_NAME=$(cat secrets/.env.remote | grep DOMAIN_NAME | cut -d '=' -f 2-) \
-    perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge '
-    docker-compose -p up -d nginx
-
+    perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
+    docker-compose up -d nginx
 fi
 

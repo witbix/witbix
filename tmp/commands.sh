@@ -84,3 +84,44 @@ echo ${PROJECT_NAME//dev/master}
 perl -i -lpe 's/^(PROJECT_NAME=).*/\1something/' .env
 perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
 perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env
+
+
+
+#chmod 600 secrets/ssh/${DEPLOY_USER}_rsa
+#eval $(ssh-agent)
+#ssh -o ControlMaster=auto \
+#    -o ControlPath=/tmp/ssh-%r@%h:%p.sock \
+#    -o ControlPersist=60 \
+#    -o StrictHostKeyChecking=no \
+#    -i secrets/ssh/${DEPLOY_USER}_rsa \
+#    ${DEPLOY_USER}@${DEPLOY_SERVER}
+#
+#
+
+#ps -p $SSH_AGENT_PID > /dev/null || eval "$(ssh-agent -s)"
+#
+#cat > /tmp/ssh_config << 'EOF'
+#Host *
+#    StrictHostKeyChecking no
+#    ControlMaster auto
+#    ControlPath /tmp/ssh_%r@%h:%p.sock
+#    ControlPersist=60
+#EOF
+#
+#ssh -F /tmp/ssh_config B6xrvy06QdGi1C8MfKsXLZ9Fw@to2.tmate.io "mkdir test"
+#
+#trap "kill $SSH_AGENT_PID" exit
+
+#cat > /tmp/ssh_config << EOF
+#Host ${DEPLOY_SERVER}
+#    IdentityFile ${PWD}/secrets/ssh/${DEPLOY_USER}_rsa
+#    StrictHostKeyChecking no
+#    ControlMaster auto
+#    ControlPath /tmp/ssh-%r@%h:%p.sock
+#    ControlPersist=60
+#EOF
+#function ssh_exec (){
+#ssh -F /tmp/ssh_config ${DEPLOY_USER}@${DEPLOY_SERVER} "$@"
+#}
+#time ssh_exec mkdir -p test
+#time ssh_exec mkdir -p test

@@ -23,7 +23,7 @@ fi
 if [ ${BUILD_ENV} == 'stage' ]; then
 
     if [ ! -f .env ]; then
-        PROJECT_NAME=$(cat secrets/.env.remote | grep PROJECT_NAME | cut -d '=' -f 2-)-stage \
+        PROJECT_NAME=$(cat secrets/.env.remote | grep PROJECT_NAME | cut -d '=' -f 2-)-${PWD##*/} \
         DOMAIN_NAME=stage.$(cat secrets/.env.remote | grep DOMAIN_NAME | cut -d '=' -f 2-) \
         MYSQL_HOSTNAME=${PROJECT_NAME}.mariadb \
         perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env

@@ -39,9 +39,9 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
 
 
     # Run required scripts on server machine over ssh
-    ssh_exec "cd ${DEPLOY_PATH}/${STAGE_PROJECT} \
-        && scripts/traefik-setup.sh remote \
-        && scripts/drupal-build.sh stage"
+    ssh_exec cd ${DEPLOY_PATH}/${STAGE_PROJECT} \
+             && scripts/traefik-setup.sh remote \
+             && scripts/drupal-build.sh stage
 fi
 
 
@@ -49,13 +49,12 @@ fi
 
 
 
-#
-#
-#if [ ${DEPLOY_ENV} == 'prod' ]; then
-#
-#    # Run required scripts on server machine over ssh
-#    ssh ${DEPLOY_USER}@${DEPLOY_SERVER} "cd ${DEPLOY_PATH} \
-#                                         && mv ${PROJECT_NAME}-stage ${PROJECT_NAME}-prod-${RANDOM} \
-#                                         && cd ${PROJECT_NAME}-prod-* \
-#                                         && scripts/drupal-build.sh prod"
-#fi
+
+if [ ${DEPLOY_ENV} == 'prod' ]; then
+
+    STAGE_PROJECT=$(ssh_exec "cut -d '=' -f 2- ${DEPLOY_PATH}/project.info")
+
+    # Run required scripts on server machine over ssh
+    ssh_exec cd ${DEPLOY_PATH}/${STAGE_PROJECT} \
+             && scripts/drupal-build.sh prod
+fi

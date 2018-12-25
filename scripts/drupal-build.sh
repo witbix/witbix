@@ -13,10 +13,9 @@ if [ ${BUILD_ENV} == 'dev' ]; then
         perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.local > .test
     fi
 
-    DEV_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     docker-compose up -d
-    docker exec -i ${DEV_PROJECT_NAME} composer install
-    docker exec -i ${DEV_PROJECT_NAME} drush si --yes
+    docker-compose exec php composer install
+    docker-compose exec php drush si --yes
 fi
 
 
@@ -31,14 +30,14 @@ if [ ${BUILD_ENV} == 'stage' ]; then
 
     docker-compose up -d
     docker-compose exec -T php composer install
-    docker-compose exec php drush si --yes
+    docker-compose exec -T php drush si --yes
 
     if [ -f code/drupal/dump.sql ]; then
-        docker-compose exec php drush sql-cli < /code/drupal/dump.sql
-        docker-compose exec php drush cim --yes
+        docker-compose exec -T php drush sql-cli < /code/drupal/dump.sql
+        docker-compose exec -T php drush cim --yes
       else
-        docker-compose exec php drush cim --partial --yes
-        docker-compose exec php drush csim live_config --yes
+        docker-compose exec -T php drush cim --partial --yes
+        docker-compose exec -T php drush csim live_config --yes
     fi
 
 fi

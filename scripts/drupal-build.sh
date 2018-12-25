@@ -34,11 +34,11 @@ if [ ${BUILD_ENV} == 'stage' ]; then
     docker-compose exec php drush si --yes
 
     if [ -f code/drupal/dump.sql ]; then
-        docker-compose php drush sql-cli < /code/drupal/dump.sql
-        docker-compose php drush -y cim
+        docker-compose exec php drush sql-cli < /code/drupal/dump.sql
+        docker-compose exec php drush -y cim
       else
-        docker-compose php drush cim --partial
-        docker-compose php drush -y csim live_config
+        docker-compose exec php drush cim --partial
+        docker-compose exec php drush -y csim live_config
     fi
 
 fi

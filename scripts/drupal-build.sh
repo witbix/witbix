@@ -29,10 +29,18 @@ if [ ${BUILD_ENV} == 'stage' ]; then
         perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' secrets/.env.remote > .env
     fi
 
-    STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
     docker-compose up -d
-    docker exec -i ${STAGE_PROJECT_NAME} composer install
-    docker exec -i ${STAGE_PROJECT_NAME} drush si --yes
+    docker-compose exec php composer install
+    docker-compose exec php drush si --yes
+
+    if [ -f code/drupal/dump.sql ]; then
+        docker-compose php drush sql-cli < /code/drupal/dump.sql
+        docker-compose php drush -y cim
+      else
+        docker-compose php drush cim --partial
+        docker-compose php drush -y csim live_config
+    fi
+
 fi
 
 

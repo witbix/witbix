@@ -17,8 +17,12 @@ script:
 - if [ ${TRAVIS_BRANCH} == 'dev' ] || [ ${TRAVIS_BRANCH} == 'stage' ]; then scripts/drupal-build.sh ${TRAVIS_BRANCH}; fi
 deploy:
 - provider: script
-  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} ${TRAVIS_BRANCH}
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} stage
   skip_cleanup: true
   on:
-    all_branches: true
-    condition: $TRAVIS_BRANCH =~ ^stage|prod$
+    branch: stage
+- provider: script
+  script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} prod
+  skip_cleanup: true
+  on:
+    branch: prod

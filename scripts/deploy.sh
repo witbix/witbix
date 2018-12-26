@@ -61,7 +61,7 @@ fi
 
 if [ ${DEPLOY_ENV} == 'prod' ]; then
 
-
+    # @toDo
     # Take a back up of existing production project
     PROD_PROJECT=$(ssh_exec "grep PROD_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
 
@@ -72,11 +72,14 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
               && scripts/drupal-build.sh prod"
 
 
+    # Update project.info
     if [ ${STAGE_PROJECT} == 'ying' ]; then
         ssh_exec "echo -e 'PROD_PROJECT=ying\nSTAGE_PROJECT=yang\n' >${DEPLOY_PATH}/project.info"
       else
         echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info
     fi
+
+
 
 
 fi

@@ -30,7 +30,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
 
     docker-compose up -d
     docker-compose exec -T php composer install
-    docker-compose exec -T php drush si --account-name=${DRUPAL_USER} --account-pass=${DRUPAL_PASS} --yes
+    docker-compose exec -T php drush si --yes
 
     if [ -f code/drupal/dump.sql ]; then
         docker-compose exec -T php drush sql-cli < /code/drupal/dump.sql

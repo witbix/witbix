@@ -3,9 +3,9 @@
 set -ex
 
 DOCKER_DIR=docker
-DOCKER_USERNAME=$(grep DOCKER_USERNAME ./secrets/.env.remote | cut -d '=' -f 2-)
-DOCKER_PASSWORD=$(grep DOCKER_PASSWORD ./secrets/.env.remote | cut -d '=' -f 2-)
-IMAGE_TAG_PREFIX=$(grep IMAGE_TAG_PREFIX ./secrets/.env.remote | cut -d '=' -f 2-)
+DOCKER_USERNAME=$(cat secrets/.env.remote | grep DOCKER_USERNAME | cut -d '=' -f 2-)
+DOCKER_PASSWORD=$(cat secrets/.env.remote | grep DOCKER_PASSWORD | cut -d '=' -f 2-)
+IMAGE_TAG_PREFIX=$(cat secrets/.env.remote | grep IMAGE_TAG_PREFIX | cut -d '=' -f 2-)
 
 # Build the images if any changes has been made inside "docker" directory and push it to docker hub
 ls -d ${DOCKER_DIR}/* | while read d

@@ -58,6 +58,9 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
     # Take a back up of existing production project
     PROD_PROJECT=$(ssh_exec "grep PROD_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
 
+    # Sync stage database with production to ensure if any leftover/newly created contents are there
+
+
     # Migrate existing stage server to Prod
     STAGE_PROJECT=$(ssh_exec "grep STAGE_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
     ssh_exec "cd ${DEPLOY_PATH}/${STAGE_PROJECT} \

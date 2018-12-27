@@ -1,14 +1,12 @@
 #!/bin/sh
 
-set -e
-
 # Enable xdebug while environment is in dev mode
 if [ ${ENVIRONMENT} == 'dev' ]; then
-    gosu root sh -c "echo "zend_extension=xdebug.so" > /etc/php7/conf.d/00_xdebug.ini" 2>/dev/null || :
+    gosu root sh -c "echo "zend_extension=xdebug.so" > /etc/php7/conf.d/00_xdebug.ini"
 fi
 
 # Prepare Drupal
-cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/ 2>/dev/null || :
+cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_NAME}/
 {
     echo "MYSQL_HOSTNAME=${MYSQL_HOSTNAME}"
     echo "MYSQL_DATABASE=${MYSQL_DATABASE}"
@@ -23,7 +21,7 @@ if [ ${GITHUB_TOKEN} != 'XXXXXXXXXXXXXXXXXXXXXXX' ]; then
 fi
 
 # Jail 'su' and 'gosu'
-gosu root chmod o-rwx /bin/su 2>/dev/null || :
-gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :
+gosu root chmod o-rwx /bin/su
+gosu root chmod o-rwx /usr/bin/gosu
 
 exec "$@"

@@ -10,7 +10,7 @@ if [ ${BUILD_ENV} == 'dev' ]; then
 
     if [ ! -f .env ]; then
         GITHUB_TOKEN=$(cat secrets/.env.remote | grep GITHUB_TOKEN | cut -d '=' -f 2-) \
-        perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.local > .test
+        perl -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env.local > .env
     fi
 
     docker-compose up -d

@@ -5,9 +5,11 @@
 #
 # Edit or remove this file as needed.
 
-site:
+# This section is for setting command-specific options.
+command:
+  site:
     install:
       options:
         # Set a predetermined username and password when using site-install.
-        account-name: 'alice'
-        account-pass: 'secret'
+       account-name: ${env.DRUPAL_USERNAME}
+       account-pass: ${env.DRUPAL_PASSWORD}

@@ -18,7 +18,9 @@ cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_
 }   > /var/www/${PROJECT_NAME}/.env
 
 # Set github api key to allow composer to access private repo
-composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+if [ ${GITHUB_TOKEN} != 'XXXXXXXXXXXXXXXXXXXXXXX' ]; then
+    composer config --global github-oauth.github.com ${GITHUB_TOKEN}
+fi
 
 # Jail 'su' & 'gosu'
 gosu root chmod o-rwx /bin/su 2>/dev/null || :

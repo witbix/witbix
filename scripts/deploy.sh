@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
 
 DEPLOY_USER=${1}
 DEPLOY_SERVER=${2}
@@ -25,7 +25,7 @@ ssh -o ControlMaster=auto \
 
 if [ ${DEPLOY_ENV} == 'stage' ]; then
 
-    ssh_exec "if [ ! -d ${DEPLOY_PATH} ]; then mkdir -p ${DEPLOY_PATH}; echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info; fi"
+    ssh_exec "mkdir -p ${DEPLOY_PATH} && if [ ! -f ${DEPLOY_PATH}/project.info ]; then echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info; fi"
 
     STAGE_PROJECT=$(ssh_exec "grep STAGE_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
     PROD_PROJECT=$(ssh_exec "grep PROD_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")

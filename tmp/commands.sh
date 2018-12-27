@@ -78,8 +78,8 @@
 #echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 #sudo chmod 400 ~/.ssh/config
 
-PROJECT_NAME=witbix-yang
-echo ${PROJECT_NAME//ying|yang/yang|ying}
+#PROJECT_NAME=witbix-yang
+#echo ${PROJECT_NAME//ying|yang/yang|ying}
 
 #perl -i -lpe 's/^(PROJECT_NAME=).*/\1something/' .env
 #perl -i -lpe ' s/(.*)=(.*)/sprintf("%s=%s","$1",$ENV{$1}? $ENV{$1}:$2)/ge ' .env
@@ -127,10 +127,14 @@ echo ${PROJECT_NAME//ying|yang/yang|ying}
 #time ssh_exec mkdir -p test
 
 
-    STAGE_PROJECT=$(ssh_exec "sh -l -c 'env' | grep STAGE_PROJECT") 2> /dev/null
-    PROD_PROJECT=$(ssh_exec "sh -l -c 'env' | grep PROD_PROJECT") 2> /dev/null
-    if [ -z ${STAGE_PROJECT} ] || [ -z ${PROD_PROJECT} ]; then
-        ssh_exec "echo -e 'export STAGE_PROJECT=ying\nexport PROD_PROJECT=yang\n' >> ~/.profile && source ~/.profile"
-    fi
+#    STAGE_PROJECT=$(ssh_exec "sh -l -c 'env' | grep STAGE_PROJECT") 2> /dev/null
+#    PROD_PROJECT=$(ssh_exec "sh -l -c 'env' | grep PROD_PROJECT") 2> /dev/null
+#    if [ -z ${STAGE_PROJECT} ] || [ -z ${PROD_PROJECT} ]; then
+#        ssh_exec "echo -e 'export STAGE_PROJECT=ying\nexport PROD_PROJECT=yang\n' >> ~/.profile && source ~/.profile"
+#    fi
 
-STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+#STAGE_PROJECT_NAME=$(cat .env | grep PROJECT_NAME | cut -d '=' -f 2-)
+
+set -ex
+DOCKER_USERNAME=$(grep DOCKER_USERNAME .env | cut -d '=' -f 2-)&>/dev/null
+echo $DOCKER_USERNAME

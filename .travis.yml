@@ -13,6 +13,7 @@ before_install:
 before_script:
 - scripts/docker-build.sh
 - scripts/traefik-setup.sh 'local'
+- scripts/prepare-env.sh 'dev'
 script:
 - if [ ${TRAVIS_BRANCH} == 'dev' ] || [ ${TRAVIS_BRANCH} == 'stage' ]; then scripts/drupal-build.sh
   ${TRAVIS_BRANCH}; fi

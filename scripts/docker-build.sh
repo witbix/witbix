@@ -17,7 +17,7 @@ done
 
 # Integration check of newly built images
 scripts/drupal-build.sh dev
-scripts/drupal-build.sh dev
+scripts/traefik-setup.sh local
 
 # Push the newly built image
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin

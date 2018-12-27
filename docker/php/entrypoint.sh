@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 # Enable xdebug while environment is in dev mode
 if [ ${ENVIRONMENT} == 'dev' ]; then

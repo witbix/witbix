@@ -1,6 +1,6 @@
-uuid: 58e18d9f-ada5-49bb-b9f7-c07a1759be8f
+uuid: f4571305-9d6c-4f62-bc60-b5c58a0e66c8
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.main
@@ -8,10 +8,12 @@ dependencies:
     - system
   theme:
     - bnc_theme
-id: mainnavigation
+_core:
+  default_config_hash: rx9IrdDv7Ldc4kpalZAxdhIPZfYIeOMh1N-qKoQZwHo
+id: bnc_theme_main_menu
 theme: bnc_theme
 region: navigation
-weight: -2
+weight: -7
 provider: null
 plugin: 'system_menu_block:main'
 settings:
@@ -20,5 +22,5 @@ settings:
   provider: system
   label_display: '0'
   level: 1
-  depth: 0
+  depth: 1
 visibility: {  }

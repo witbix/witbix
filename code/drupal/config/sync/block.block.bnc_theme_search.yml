@@ -1,0 +1,22 @@
+uuid: efeaf522-f467-4b57-952e-2c271b32c0fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - bnc_theme
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: bnc_theme_search
+theme: bnc_theme
+region: sidebar_first
+weight: -1
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: visible
+visibility: {  }

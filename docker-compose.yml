@@ -10,7 +10,7 @@ services:
     working_dir: /var/www/${PROJECT_NAME}
     volumes:
       - ./code/drupal:/var/www/${PROJECT_NAME}:cached
-      - files:/tmp/files
+      - files:/tmp/files:cached
     environment:
       - ENVIRONMENT
       - PROJECT_NAME
@@ -34,7 +34,7 @@ services:
     working_dir: /var/www/${PROJECT_NAME}/web
     volumes:
       - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:cached
-      - files:/tmp/files
+      - files:/tmp/files:cached
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"
     environment:
@@ -52,7 +52,7 @@ services:
     image: witbix/mariadb
     restart: always
     volumes:
-      - database:/var/lib/mysql
+      - database:/var/lib/mysql:cached
     environment:
       - MYSQL_USER
       - MYSQL_PASSWORD

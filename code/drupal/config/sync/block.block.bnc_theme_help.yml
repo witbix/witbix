@@ -1,0 +1,22 @@
+uuid: b963a454-30ec-4951-a627-36cc4225a821
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - bnc_theme
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: bnc_theme_help
+theme: bnc_theme
+region: content
+weight: -30
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

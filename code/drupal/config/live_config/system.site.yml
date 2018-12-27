@@ -1,7 +1,7 @@
-uuid: 716dbea2-0165-40c6-8b35-f13043a0d936
-name: Witbix.com
-mail: dibya.dev94@gmail.com
-slogan: 'A Platform for Philanthropic Mavens'
+uuid: bec13ec0-a38c-407a-8880-e7563ebf969e
+name: 'Drush Site-Install'
+mail: admin@example.com
+slogan: ''
 page:
   403: ''
   404: ''

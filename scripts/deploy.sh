@@ -61,7 +61,7 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
     # Migrate existing stage server to Prod
     STAGE_PROJECT=$(ssh_exec "grep STAGE_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
     ssh_exec "cd ${DEPLOY_PATH}/${STAGE_PROJECT} \
-              scripts/prepare-env.sh 'prod' \
+              && scripts/prepare-env.sh 'prod' \
               && scripts/drupal-build.sh prod"
 
     # Update project.info

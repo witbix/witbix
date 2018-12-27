@@ -68,7 +68,7 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
     if [ ${STAGE_PROJECT} == 'ying' ]; then
         ssh_exec "echo -e 'PROD_PROJECT=ying\nSTAGE_PROJECT=yang\n' >${DEPLOY_PATH}/project.info"
       else
-        echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info
+        ssh_exec "echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info"
     fi
 
 fi

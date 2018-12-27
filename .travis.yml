@@ -14,7 +14,8 @@ before_script:
 - scripts/docker-build.sh
 - scripts/traefik-setup.sh 'local'
 script:
-- if [ ${TRAVIS_BRANCH} == 'dev' ] || [ ${TRAVIS_BRANCH} == 'stage' ]; then scripts/drupal-build.sh ${TRAVIS_BRANCH}; fi
+- if [ ${TRAVIS_BRANCH} == 'dev' ] || [ ${TRAVIS_BRANCH} == 'stage' ]; then scripts/drupal-build.sh
+  ${TRAVIS_BRANCH}; fi
 deploy:
 - provider: script
   script: scripts/deploy.sh ${DEPLOY_USER} ${DEPLOY_SERVER} ${DEPLOY_PATH} stage

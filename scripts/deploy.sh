@@ -42,8 +42,8 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
         ./  ${DEPLOY_USER}@${DEPLOY_SERVER}:${DEPLOY_PATH}/${STAGE_PROJECT}/
 
     # Copy sql dump from Production to Stage
-    if [ $(ssh_exec "docker exec ${PROD_PROJECT} drush status bootstrap 2> /dev/null | grep -c Successful") == 1 ]; then
-        ssh_exec "docker exec -i ${PROD_PROJECT} drush sql-dump --result-file=../dump.sql"
+    if [ $(ssh_exec "docker exec ${DEPLOY_PATH##*/}-${PROD_PROJECT} drush status bootstrap 2> /dev/null | grep -c Successful") == 1 ]; then
+        ssh_exec "docker exec -i ${DEPLOY_PATH##*/}-${PROD_PROJECT} drush sql-dump --result-file=../dump.sql"
         ssh_exec "mv ${DEPLOY_PATH}/${PROD_PROJECT}/code/drupal/dump.sql ${DEPLOY_PATH}/${STAGE_PROJECT}/code/drupal"
     fi
 

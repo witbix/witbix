@@ -33,7 +33,7 @@ services:
     restart: always
     working_dir: /var/www/${PROJECT_NAME}/web
     volumes:
-      - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:cached
+      - ./code/drupal/web/:/var/www/${PROJECT_NAME}/web/:ro,cached
       - files:/tmp/files:cached
     labels:
       - "traefik.frontend.rule=Host:${DOMAIN_NAME}"

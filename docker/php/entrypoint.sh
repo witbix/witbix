@@ -22,7 +22,7 @@ if [ ${GITHUB_TOKEN} != 'XXXXXXXXXXXXXXXXXXXXXXX' ]; then
     composer config --global github-oauth.github.com ${GITHUB_TOKEN}
 fi
 
-# Jail 'su' & 'gosu'
+# Jail 'su' and 'gosu'
 gosu root chmod o-rwx /bin/su 2>/dev/null || :
 gosu root chmod o-rwx /usr/bin/gosu 2>/dev/null || :
 

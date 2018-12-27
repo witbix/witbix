@@ -8,7 +8,6 @@ DEPLOY_PATH=${3}
 DEPLOY_ENV=${4}
 
 
-
 # Start ssh-agent
 ps aux | grep -c "[s]sh-agent" > /dev/null || eval $(ssh-agent)
 function ssh_exec (){
@@ -22,14 +21,12 @@ ssh -o ControlMaster=auto \
 }
 
 
-
 if [ ${DEPLOY_ENV} == 'stage' ]; then
 
     ssh_exec "mkdir -p ${DEPLOY_PATH} && if [ ! -f ${DEPLOY_PATH}/project.info ]; then echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info; fi"
 
     STAGE_PROJECT=$(ssh_exec "grep STAGE_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
     PROD_PROJECT=$(ssh_exec "grep PROD_PROJECT ${DEPLOY_PATH}/project.info | cut -d '=' -f 2-")
-
 
     # Start uploading artifacts to server using rsync
     rsync --info=progress2 \
@@ -54,11 +51,6 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
 fi
 
 
-
-
-
-
-
 if [ ${DEPLOY_ENV} == 'prod' ]; then
 
     # @toDo
@@ -78,8 +70,5 @@ if [ ${DEPLOY_ENV} == 'prod' ]; then
       else
         echo -e 'PROD_PROJECT=yang\nSTAGE_PROJECT=ying\n' >${DEPLOY_PATH}/project.info
     fi
-
-
-
 
 fi

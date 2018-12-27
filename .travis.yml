@@ -11,7 +11,7 @@ before_install:
   -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
 before_script:
-- scripts/docker-build.sh 'docker' 'witbix'
+- scripts/docker-build.sh
 - scripts/traefik-setup.sh 'local'
 script:
 - if [ ${TRAVIS_BRANCH} == 'dev' ] || [ ${TRAVIS_BRANCH} == 'stage' ]; then scripts/drupal-build.sh ${TRAVIS_BRANCH}; fi

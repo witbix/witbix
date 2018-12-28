@@ -18,6 +18,7 @@ if [ -n "$(git diff HEAD^ --exit-code --name-only ${DOCKER_DIR})" ]; then
 
     # Integration check of newly built images
     scripts/traefik-setup.sh local
+    scripts/prepare-env.sh dev
     scripts/drupal-build.sh dev
 
     # Push the newly built image

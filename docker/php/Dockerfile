@@ -25,6 +25,7 @@ RUN set -ex \
             php7-xmlwriter \
             php7-opcache \
             php7-xdebug \
+            php7-redis \
             php7 \
             zip \
             git \
@@ -32,7 +33,6 @@ RUN set -ex \
             composer@ec \
             shadow \
             gosu@et \
-            acl \
     && addgroup -g 1000 deploy \
     && adduser -D -u 1000 -G deploy -s /bin/sh deploy \
     && addgroup -g 4000 php-fpm \

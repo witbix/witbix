@@ -58,8 +58,15 @@ services:
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_ROOT_PASSWORD
+      - ENVIRONMENT
     networks:
       - drupal
+
+#  redis:
+#    container_name: ${PROJECT_NAME}.redis
+#    image: witbix/redis
+#    networks:
+#      - drupal
 
 volumes:
   database:

@@ -33,6 +33,7 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
         --archive  \
         --compress \
         --group \
+        --delete \
         --include="secrets/traefik" \
         --exclude-from="./scripts/.rsyncexclude" \
         -e "ssh -T -c aes128-ctr -o Compression=no -o ControlPath=/tmp/ssh-%r@%h:%p.sock -x" \

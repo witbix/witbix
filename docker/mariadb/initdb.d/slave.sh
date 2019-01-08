@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -ex
+
+"${mysql[@]}" <<-EOSQL
+CHANGE MASTER TO MASTER_USER='$MYSQL_USER', MASTER_PASSWORD='$MYSQL_PASSWORD';
+EOSQL

@@ -5,11 +5,12 @@ set -ex
 if [ ${ENVIRONMENT} == 'prod' ]; then
     ln -sf /conf.d/master.cnf /etc/mysql/conf.d/replica.cnf
     ln -sf /initdb.d/master.sh /docker-entrypoint-initdb.d/replica.sh
-fi
+    exec /docker-entrypoint.sh ${@} --server-id=${RANDOM}
 
-if [ ${ENVIRONMENT} == 'stage' ]; then
-    ln -sf /conf.d/slave.cnf /etc/mysql/conf.d/replica.cnf
-    ln -sf /initdb.d/slave.sh /docker-entrypoint-initdb.d/replica.sh
+elif [ ${ENVIRONMENT} == 'stage' ]; then
+      ln -sf /conf.d/slave.cnf /etc/mysql/conf.d/replica.cnf
+      ln -sf /initdb.d/slave.sh /docker-entrypoint-initdb.d/replica.sh
+      exec /docker-entrypoint.sh ${@} --server-id=${RANDOM}
+else
+    exec /docker-entrypoint.sh ${@}
 fi
-
-exec /docker-entrypoint.sh ${@}

@@ -1,7 +1,7 @@
 [mysqld]
 log-basename=slave
 log-bin=mariadb-bin
-server-id=2
+
 
 #replicate-wild-ignore-table=drupal.cache%
 #replicate-wild-ignore-table=drupal.search%

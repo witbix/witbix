@@ -38,6 +38,7 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
         -e "ssh -T -c aes128-ctr -o Compression=no -o ControlPath=/tmp/ssh-%r@%h:%p.sock -x" \
         ./  ${DEPLOY_USER}@${DEPLOY_SERVER}:${DEPLOY_PATH}/${STAGE_PROJECT}/
 
+
     # Copy sql dump from Production to Stage
     if [ $(ssh_exec "docker exec ${DEPLOY_PATH##*/}-${PROD_PROJECT} drush status bootstrap 2> /dev/null | grep -c Successful") == 1 ]; then
         ssh_exec "docker exec -i ${DEPLOY_PATH##*/}-${PROD_PROJECT}.mariadb mysqldump -u root -penter@8018573186  --gtid --master-data --single-transaction --apply-slave-statements drupal > dump.sql"

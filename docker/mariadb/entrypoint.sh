@@ -1,13 +1,14 @@
 #!/bin/bash
 
-set -eo pipefail
+set -ex
 
-# Execute pool of scripts as root before mysql starts
-for ep in /entrypoint.d/*.sh; do
-  if [ -x ${ep} ]; then
-    echo "Running: ${ep}"
-    "${ep}"
-  fi
-done
+if [ ${ENVIRONMENT} == 'prod' ]; then
+    ln -sf /conf.d/master.cnf /etc/mysql/conf.d/replica.cnf
+    ln -sf /initdb.d/01-replica-setup.sh /docker-entrypoint-initdb.d/01-replica-setup.sh
+fi
+
+if [ ${ENVIRONMENT} == 'stage' ]; then
+    ln -sf /conf.d/slave.cnf /etc/mysql/conf.d/replica.cnf
+fi
 
 exec /docker-entrypoint.sh ${@}

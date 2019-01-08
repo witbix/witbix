@@ -24,7 +24,7 @@ if [ ${BUILD_ENV} == 'stage' ]; then
         docker-compose exec -T mariadb mysql -u root -penter@8018573186 -e "CHANGE MASTER TO MASTER_HOST='witbix-yang.mariadb';"
         docker-compose exec -T mariadb mysql -u root -penter@8018573186 drupal < code/drupal/dump.sql
 #        docker-compose exec -T php drush sql-cli < code/drupal/dump.sql
-#        docker-compose exec -T php drush cim --yes
+        docker-compose exec -T php drush cim --yes
       else
         docker-compose exec -T php drush si --yes
         docker-compose exec -T php drush cim --partial --yes

@@ -43,7 +43,7 @@ if [ ${DEPLOY_ENV} == 'stage' ]; then
     # Copy sql dump from Production to Stage
     if [ $(ssh_exec "docker exec ${DEPLOY_PATH##*/}-${PROD_PROJECT} drush status bootstrap 2> /dev/null | grep -c Successful") == 1 ]; then
         ssh_exec "docker exec -i ${DEPLOY_PATH##*/}-${PROD_PROJECT}.mariadb mysqldump --gtid --master-data --single-transaction --apply-slave-statements drupal > dump.sql"
-        ssh_exec "perl -pi -e 's/CHANGE MASTER TO MASTER_USE_GTID=slave_pos;/CHANGE MASTER TO MASTER_HOST='$PROD_PROJECT', MASTER_USE_GTID=slave_pos;/ if $. == 34' dump.sql"
+        ssh_exec 'perl -pi -e "s/CHANGE MASTER TO MASTER_USE_GTID=slave_pos;/CHANGE MASTER TO MASTER_HOST='${DEPLOY_PATH##*/}-${PROD_PROJECT}', MASTER_USE_GTID=slave_pos;/ if $. == 34" dump.sql'
         ssh_exec "mv dump.sql ${DEPLOY_PATH}/${STAGE_PROJECT}/code/drupal"
     fi
 

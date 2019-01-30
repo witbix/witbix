@@ -58,7 +58,9 @@ services:
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_ROOT_PASSWORD
-      - ENVIRONMENT
+      - REPL_ENABLE
+      - REPL_USER
+      - REPL_PASS
     networks:
       - drupal
 

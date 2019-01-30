@@ -1,3 +1,0 @@
-[mysqld]
-log-basename=master
-log-bin=mariadb-bin

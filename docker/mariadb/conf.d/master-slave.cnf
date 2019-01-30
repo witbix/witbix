@@ -9,10 +9,8 @@
 #replicate-ignore-table=drupal.key_value_expire
 
 
-
 #replicate-wild-ignore-table=drupal.config%
 #replicate-ignore-table=drupal.key_value
-
 
 
 replicate-wild-do-table=drupal.node%

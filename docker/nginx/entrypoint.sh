@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 
 gosu root sh -c "envsubst \
           '\$DOMAIN_NAME \$PROJECT_NAME' \

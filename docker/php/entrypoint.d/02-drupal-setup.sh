@@ -8,4 +8,5 @@ cp -r -u /home/deploy/drupal-templates/${DRUPAL_VERSION}.x/. /var/www/${PROJECT_
     echo "MYSQL_USER=${MYSQL_USER}"
     echo "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
     echo "MYSQL_PORT=${MYSQL_PORT}"
+    echo "REDIS_HOSTNAME=${REDIS_HOSTNAME}"
 }   > /var/www/${PROJECT_NAME}/.env

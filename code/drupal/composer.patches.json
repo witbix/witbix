@@ -1,4 +1,7 @@
 {
   "patches": {
+    "drupal/core": {
+      "Verify that the configured service exists before calling it in CacheFactory": "https://www.drupal.org/files/issues/2018-03-11/2429321-cache-factory-service-check-38.patch"
+    }
   }
 }

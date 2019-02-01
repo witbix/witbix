@@ -20,7 +20,7 @@ touch config/sync/.gitkeep \
 
 
 # Prepare the settings file for installation
-if [ ! -f web/sites/default/settings.php ]
+if [ ! -f web/sites/default/settings.php ];
   then
     sed \
       -e "s/\(\$settings\['hash_salt'\] = \)'';/\1'$(php -r 'print bin2hex(openssl_random_pseudo_bytes(32));')';/" \
@@ -28,6 +28,7 @@ if [ ! -f web/sites/default/settings.php ]
       > web/sites/default/settings.php
 
     if [ -f .env ]; then cat >> web/sites/default/settings.php << 'EOF'
+
 $config_directories['sync'] = '../config/sync';
 $settings["default_content_deploy_content_directory"] = '../content/sync';
 $databases['default']['default'] = array (
@@ -42,6 +43,20 @@ $databases['default']['default'] = array (
  );
 EOF
     fi
+
+    if [ ${REDIS_ENABLE} == 'yes' ]; then cat >> web/sites/default/settings.php << 'EOF'
+
+/**
+* Redis Configuration.
+*/
+$settings['redis.connection']['interface'] = 'PhpRedis';
+$settings['cache']['default'] = 'cache.backend.redis';
+$settings['redis.connection']['host'] = getenv('REDIS_HOSTNAME');
+$settings['container_yamls'][] = 'modules/redis/example.services.yml';
+EOF
+    fi
+
+
     chmod 740 web/sites/default/settings.php
     echo "Create a sites/default/settings.php file with chmod 740"
 fi

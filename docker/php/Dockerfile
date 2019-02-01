@@ -33,6 +33,8 @@ RUN set -ex \
             composer@ec \
             shadow \
             gosu@et \
+            # https://github.com/cweagans/composer-patches/pull/184
+            patch@em \
     && addgroup -g 1000 deploy \
     && adduser -D -u 1000 -G deploy -s /bin/sh deploy \
     && addgroup -g 4000 php-fpm \

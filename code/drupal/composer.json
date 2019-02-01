@@ -28,7 +28,6 @@
         }
     ],
     "require": {
-        "witbix/bnc_theme": "dev-8.x-1.x",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6.5",
         "drupal-composer/drupal-scaffold": "^2.5",
@@ -39,10 +38,12 @@
         "drupal/core": "^8.6.0",
         "drupal/default_content_deploy": "^1.0@alpha",
         "drupal/devel": "^1.2",
+        "drupal/redis": "^1.1",
         "drush/drush": "^9.0.0",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
-        "webmozart/path-util": "^2.3"
+        "webmozart/path-util": "^2.3",
+        "witbix/bnc_theme": "dev-8.x-1.x"
     },
     "require-dev": {
         "webflo/drupal-core-require-dev": "^8.6.0"
